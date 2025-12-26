@@ -10,16 +10,36 @@
 #define TL1_ADDR 0x8B
 #define TH1_ADDR 0x8D
 
-typedef enum {
-	TCON_TF1 = 7,
-	TCON_TR1 = 6,
-	TCON_TF0 = 5,
-	TCON_TR0 = 4,
-	TCON_IE1 = 3,
-	TCON_IT1 = 2,
-        TCON_IE0 = 1,
-	TCON_IT0 = 0
+#define TCON_TF1_MASK (1 << 7)
+#define TCON_TR1_MASK (1 << 6)
+#define TCON_TF0_MASK (1 << 5)
+#define TCON_TR0_MASK (1 << 4)
+#define TCON_IE1_MASK (1 << 3)
+#define TCON_IT1_MASK (1 << 2)
+#define TCON_IE0_MASK (1 << 1)
+#define TCON_IT0_MASK (1 << 0)
 
-} tcon_bits_t;
+#define TMOD_GATE1_MASK (1 << 7)
+#define TMOD_C_T1_MASK (1 << 6)
+#define TMOD_M1_1_MASK (1 << 5)
+#define TMOD_M1_0_MASK (1 << 4) 
+#define TMOD_GATE0_MASK (1 << 3)
+#define TMOD_C_T0_MASK (1 << 2)
+#define TMOD_M0_1_MASK (1 << 1)
+#define TMOD_M0_0_MASK (1 << 0)
+
+typedef struct {
+	uint8_t TH;
+	uint8_t TL;
+
+} timer_t;
+
+typedef struct {
+	timer_t timer0;
+	timer_t timer1;
+        uint8_t TCON;
+        uint8_t TMOD;
+	uint64_t total_cycles;	
+} timers_system;
 
 
