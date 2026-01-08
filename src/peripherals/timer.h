@@ -40,6 +40,10 @@ typedef struct {
         uint8_t TCON;
         uint8_t TMOD;
 	uint64_t total_cycles;	
-} timers_system;
+} timers_system_t;
 
+void ini_timers(timers_system_t *timers);
+void read_timers(timers_system_t *timers);
+void write_timers(timers_system_t *timers);
 
+#endif
