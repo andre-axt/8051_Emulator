@@ -63,19 +63,14 @@ typedef struct {
 	sfr_t sfr;
 	uint8_t internal_rom[INTERNAL_ROM_SIZE];
 
-	uint8_t *external_rom;
-	uint8_t *external_ram;
-
-	struct {
-		uint8_t *code_space;
-		uint8_t *data_space;
-
-	}
 	timer_system_t *timers;
-
 
 } memory_t;
 
 void memory_init(memory_t *mem);
+uint8_t memory_read_code(memory_t *mem, uint16_t address);
+uint8_t memory_read_data(memory_t *mem, uint8_t address);
+void memory_write_data(memory_t *mem, uint8_t address, uint8_t value);
+int memory_load_program(memory_t *mem, const uint8_t *program, uint16_t size, uint16_t start_address);
 
 #endif

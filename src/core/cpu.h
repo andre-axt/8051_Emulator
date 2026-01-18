@@ -2,8 +2,8 @@
 #define CPU_H
 
 #include <stdint.h>
-#include <memory.h>
-#include <timer.h>
+#include "memory.h"
+#include "timer.h"
 
 typedef struct {
 	memory_t mem;

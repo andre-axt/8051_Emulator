@@ -1,5 +1,8 @@
 #include "memory.h"
-#include <stdlib.c>
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 
 void memory_init(memory_t *mem){
 	if (mem == NULL) return;
@@ -35,11 +38,53 @@ void memory_init(memory_t *mem){
 	mem->sfr.P2 = 0xFF;
 	mem->sfr.P3 = 0xFF;
 
-	mem->external_rom = NULL;
-	mem->external_ram = NULL;
-
-	mem->code_space = NULL;
-	mem->data_space = NULL;
+	mem->ram.current_bank = 0;
 
 	mem->timers = NULL;
 }
+
+uint8_t memory_read_code (memory_t *mem, uint16_t address) {
+	if(address < INTERNAL_ROM_SIZE){
+		return mem->internal_rom[address];
+	}
+	return 0xFF;
+
+}
+
+uint8_t memory_read_data (memory_t *mem, uint8_t address) {
+	if (address < 0x80) {
+		return mem->ram.bytes[address];
+	}	
+	else {
+		return memory_read_sfr(mem, address);
+	}
+
+}
+
+uint8_t memory_write_data (memory_t *mem, uint8_t address, uint8_t value) {
+	if (address < 0x80) {
+		mem->ram.bytes[address] = value;
+	}
+	else {
+		memory_write_sfr(mem, address, value);
+	
+	}
+
+}
+
+int memory_load_program (memory_t *mem, const uint8_t program, const uint16_t size, const uint16_t start_address) {
+	if (mem == NULL || program == NULL || size == 0) {
+		return -1;
+	
+	}
+
+	if (start_address + size < INTERNAL_ROM_SIZE) {
+		memcpy(mem->internal_rom[start_address], program, size);
+		return 0;
+	}
+
+	return 1;
+
+}
+
+
