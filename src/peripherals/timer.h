@@ -29,21 +29,12 @@
 #define TMOD_M0_0_MASK (1 << 0)
 
 typedef struct {
-	uint8_t TH;
-	uint8_t TL;
-
-} timer_t;
-
-typedef struct {
-	timer_t timer0;
-	timer_t timer1;
-        uint8_t TCON;
-        uint8_t TMOD;
-	uint64_t total_cycles;	
+	uint16_t timer0;
+	uint16_t timer1;
+	
 } timers_system_t;
 
-void ini_timers(timers_system_t *timers);
-void read_timers(timers_system_t *timers);
-void write_timers(timers_system_t *timers);
+int init_timers(timers_system_t *timers);
+void update_timers(memory_t *mem, uint32_t cycles);
 
 #endif

@@ -4,8 +4,8 @@
 #include <string.h>
 #include <stdint.h>
 
-void memory_init(memory_t *mem){
-	if (mem == NULL) return;
+int memory_init(memory_t *mem){
+	if (mem == NULL) return 1;
 
 	memset(mem, 0, sizeof(memory_t));
 
@@ -41,6 +41,8 @@ void memory_init(memory_t *mem){
 	mem->ram.current_bank = 0;
 
 	mem->timers = NULL;
+
+	return 0;
 }
 
 uint8_t memory_read_code (memory_t *mem, uint16_t address) {
