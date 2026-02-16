@@ -9,8 +9,8 @@ int memory_init(memory_t *mem){
 
 	memset(mem, 0, sizeof(memory_t));
 
-	memset(mem->ram, 0, sizeof(internal_ram_t);
-	memset(mem->rom, 0, INTERNAL_ROM_SIZE);
+	memset(mem->ram, 0, sizeof(internal_ram_t));
+	memset(mem->internal_rom, 0, INTERNAL_ROM_SIZE);
 	mem->ram.current_bank = 0;
 
 	mem->sfr.SP = 0x07;
@@ -22,7 +22,6 @@ int memory_init(memory_t *mem){
 	mem->sfr.PCON = 0x00;
 	mem->sfr.ACC = 0x00;
 	mem->sfr.B = 0x00;
-	mem->sfr.DPTR = 0x00;
 	mem->sfr.SBUF = 0x00;
 	mem->sfr.SCON = 0x00;
 	mem->sfr.TH0 = 0x00;
@@ -147,7 +146,7 @@ static void memory_write_sfr (memory_t *mem, uint8_t address, uint8_t value) {
 
 }
 
-uint8_t memory_write_data (memory_t *mem, uint8_t address, uint8_t value) {
+void memory_write_data (memory_t *mem, uint8_t address, uint8_t value) {
 	if (address < 0x80) {
 		mem->ram.bytes[address] = value;
 	}
@@ -158,7 +157,7 @@ uint8_t memory_write_data (memory_t *mem, uint8_t address, uint8_t value) {
 
 }
 
-int memory_load_program (memory_t *mem, const uint8_t program, const uint16_t size, const uint16_t start_address) {
+int memory_load_program (memory_t *mem, const uint8_t *program, const uint16_t size, const uint16_t start_address) {
 	if (mem == NULL || program == NULL || size == 0) {
 		return -1;
 	
