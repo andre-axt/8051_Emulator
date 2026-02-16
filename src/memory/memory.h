@@ -72,5 +72,7 @@ uint8_t memory_read_code(memory_t *mem, uint16_t address);
 uint8_t memory_read_data(memory_t *mem, uint8_t address);
 void memory_write_data(memory_t *mem, uint8_t address, uint8_t value);
 int memory_load_program(memory_t *mem, const uint8_t *program, uint16_t size, uint16_t start_address);
+void update_sfr_from_timer0(memory_t *mem);
+void update_sfr_from_timer1(memory_t *mem);
 
 #endif

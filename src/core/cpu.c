@@ -16,3 +16,10 @@ void cpu_init(cpu_t *cpu) {
 	cpu->PC = 0x0000;
 
 }
+
+void cpu_step(cpu_t *cpu) {
+	if (cpu->halted) return;
+
+	uint8_t opcode = memory_read_code
+
+}
