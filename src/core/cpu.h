@@ -15,5 +15,9 @@ typedef struct {
 } cpu_t;
 
 void cpu_init(cpu_t *cpu);
+uint8_t fetch_byte(cpu_t *cpu);
+uint16_t fetch_word(cpu_t *cpu);
+void cpu_step(cpu_t *cpu);
+void cpu_run(cpu_t *cpu, uint32_t steps);
 
 #endif

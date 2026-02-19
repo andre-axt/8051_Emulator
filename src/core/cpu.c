@@ -1,6 +1,7 @@
 #include "cpu.h"
 #include "memory.h"
 #include "timer.h"
+#include "opcode"
 #include <stdlib.h>
 #include <string.h>
 
@@ -32,8 +33,28 @@ void cpu_step(cpu_t *cpu) {
 	if (cpu->halted) return;
 
 	uint8_t opcode = fetch_byte(cpu);
-	cpu->total_cycles += 1;
+	instruction_t *instr = &opcode_table[opcode];
+	
+	if (instr->execute == NULL) {
+        	printf("ERROR: Unimplemented opcode 0x%02X at 0x%04X\n", opcode, current_pc);
+        	cpu->halted = 1;
+        	return;
+    	}
+
+	instr->execute(cpu);
+	cpu->total_cycles += instr->cycles;
 
 	update_timers(cpu->mem, cpu->total_cycles);
 
 }
+
+void cpu_run(cpu_t *cpu, uint32_t steps) {
+	for (uint32_t i = 0; i < steps && !cpu->halted; i++) {
+		cpu_step(cpu);
+	}
+
+}
+
+
+
+
