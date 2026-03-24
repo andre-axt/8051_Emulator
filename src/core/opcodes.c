@@ -43,5 +43,19 @@ static uint8_t get_bit(cpu_t *cpu, uint8_t bit_addr) {
 	return 0;
 
 }
+
+static uint8_t set_bit(cpu_t *cpu, uint8_t bit_addr, uint8_t value) {
+	uint8_t byte_offset = bit_addr >> 3;
+	uint8_t byte_addr = 0x20 +byte_offset;
+	uint8_t bit_pos = bit_addr & 0x07;
+	uint8_t byte = memory_read_data(cpu->mem, byte_addr);
+
+	if (value) {
+		byte |= (1 << bit_pos);
+	} else {
+		byte &= ~(1 << bit_pos);
+		
+	}
 	
+	memory_write_data(cpu->mem, byte_addr, byte);
 }
