@@ -4,10 +4,12 @@
 #include <stdint.h>
 #include "memory.h"
 #include "timer.h"
+#include "interruptions.h"
 
 typedef struct {
 	memory_t mem;
 	timers_system_t timers;
+	Interruptions_t interruptions;
 	uint16_t PC;
 	uint64_t total_cycles;
 	uint8_t halted;	
