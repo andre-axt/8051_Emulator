@@ -16,5 +16,5 @@ typedef struct {
   int8_t Serial;
 } Interruptions_t
 
-int8_t init_int(Interruption *interruptions); //Just reset all interrupts to zero.
+int8_t init_int(Interruption *interruptions); //Just reset all interrupts to 1.
 int8_t lock_int(Interruption *interruptions); //Currently, the idea is to set a signal to freeze and configure the PC according to the interrupt location.
