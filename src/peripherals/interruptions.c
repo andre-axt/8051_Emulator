@@ -9,6 +9,33 @@ void init_int(Interruptions *interruptions){
   
 }
 
+inline void lock_int(uint16_t *pc, int8_t handler) {
+  if(handler == 0) return;
+  switch(handler) {
+    case 1{
+      *pc = INT0;
+      return;
+    }
+    case 2{
+      *pc = TIMER0;
+      return;
+    }
+    case 3{
+      *pc = INT1;
+      return;
+    }
+    case 4{
+      *pc = TIMER1;
+      return;
+    }
+    case 5{
+      *pc = SERIAL;
+      return;
+    }
+  }
+  return;
+}
+
 inline void set_int(Interruptions_t *interruptions, int8_t handler) {
   if(handler == 0) return;
   switch(handler) {
