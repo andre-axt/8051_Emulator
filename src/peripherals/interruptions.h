@@ -8,6 +8,14 @@
 #define TIMER1 0x1B
 #define SERIAL 0x23
 
+#define IE_EX0   (1 << 0)  
+#define IE_ET0   (1 << 1) 
+#define IE_EX1   (1 << 2)  
+#define IE_ET1   (1 << 3)  
+#define IE_ES    (1 << 4)  
+#define IE_ET2   (1 << 5)  
+#define IE_EA    (1 << 7)  
+
 typedef struct {
   int8_t INT0;
   int8_t Timer0;
