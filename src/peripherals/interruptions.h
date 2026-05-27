@@ -17,15 +17,15 @@
 #define IE_EA    (1 << 7)  
 
 typedef struct {
-  int8_t INT0;
-  int8_t Timer0;
-  int8_t INT1;
-  int8_t Timer1;
-  int8_t Serial;
-  uint8_t *IE; 
+  	int8_t INT0;
+  	int8_t Timer0;
+  	int8_t INT1;
+  	int8_t Timer1;
+  	int8_t Serial;
+  	uint8_t *IE; 
 	uint8_t *IP;
 } Interruptions_t
 
 int8_t init_int(Interruptions_t *interruptions); //Just reset all interrupts to 1
 int8_t check_int(Interruptions_t *interruptions); 
-int8_t lock_int(Interruptions_t *interruptions);
+int8_t lock_int(Interruptions_t *interruptions, int8_t handler); // 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
