@@ -13,7 +13,6 @@
 #define IE_EX1   (1 << 2)  
 #define IE_ET1   (1 << 3)  
 #define IE_ES    (1 << 4)  
-#define IE_ET2   (1 << 5)  
 #define IE_EA    (1 << 7)  
 
 typedef struct {
@@ -28,4 +27,5 @@ typedef struct {
 
 int8_t init_int(Interruptions_t *interruptions); //Just reset all interrupts to 1
 int8_t check_int(Interruptions_t *interruptions); 
-int8_t lock_int(Interruptions_t *interruptions, int8_t handler); // 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
+int8_t lock_int(Interruptions_t *interruptions, int8_t handler, uint16_t *pc); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
+inline void set_int(Interruptions_t *interruptions, int8_t handler) // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
