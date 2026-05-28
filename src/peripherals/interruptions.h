@@ -13,7 +13,13 @@
 #define IE_EX1   (1 << 2)  
 #define IE_ET1   (1 << 3)  
 #define IE_ES    (1 << 4)  
-#define IE_EA    (1 << 7)  
+#define IE_EA    (1 << 7)
+
+#define IP_PX0	 (1 << 0)
+#define IP_PT0	 (1 << 1)
+#define IP_PX1	 (1 << 2)
+#define IP_PT1	 (1 << 3)
+#define IP_PS	 (1 << 4)
 
 typedef struct {
   	int8_t INT0;
