@@ -32,9 +32,9 @@ typedef struct {
 	uint16_t timer0;
 	uint16_t timer1;
 	
-} timers_system_t;
+} Timers_system_t;
 
-int init_timers(timers_system_t *timers);
-void update_timers(memory_t *mem, uint32_t cycles);
+int init_timers(Timers_system_t *timers);
+void update_timers(Memory_t *mem, uint32_t cycles);
 
 #endif
