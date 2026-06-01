@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int init_timers (timers_system_t *timers) {
+int init_timers (Timers_system_t *timers) {
 	if(timers == NULL) return 1;
 
 	timers->timer0 = 0;
@@ -13,7 +13,7 @@ int init_timers (timers_system_t *timers) {
 
 }
 
-void update_timers(memory_t *mem, uint32_t cycles) {
+void update_timers(Memory_t *mem, uint32_t cycles) {
 	if (mem->timers == NULL) return;
 
 	uint8_t tmod = mem->sfr.TMOD;
