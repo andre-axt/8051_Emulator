@@ -1,12 +1,16 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include "interruptions.h"
+#include "timers.h"
 #include "memory.h"
 #include "cpu.h"
-#include "timers.h"
+
+typedef struct {
+	Interruptions_t *intpt;
+	Timers_system_t *timers;
+	Memory_t *mem;
+	Cpu_t *cpu;
+} 8051_t;
 
 int main(){
-	cpu_t cpu;
-	cpu_init(&cpu);
-
+	// nothing for now
 
 }
