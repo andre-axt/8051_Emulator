@@ -24,7 +24,7 @@ typedef struct {
 	};
 	uint8_t current_bank;
 
-}internal_ram_t;
+}Internal_ram_t;
 
 typedef struct {
 	uint8_t ACC;
@@ -56,7 +56,7 @@ typedef struct {
 	uint8_t TL1;
 	uint8_t TH1;
 
-} sfr_t;
+} Sfr_t;
 
 typedef struct {
 	internal_ram_t ram;
@@ -65,14 +65,14 @@ typedef struct {
 
 	timer_system_t *timers;
 
-} memory_t;
+} Memory_t;
 
-int memory_init(memory_t *mem);
-uint8_t memory_read_code(memory_t *mem, uint16_t address);
-uint8_t memory_read_data(memory_t *mem, uint8_t address);
-void memory_write_data(memory_t *mem, uint8_t address, uint8_t value);
-int memory_load_program(memory_t *mem, const uint8_t *program, uint16_t size, uint16_t start_address);
-void update_sfr_from_timer0(memory_t *mem);
-void update_sfr_from_timer1(memory_t *mem);
+int memory_init(Memory_t *mem);
+uint8_t memory_read_code(Memory_t *mem, uint16_t address);
+uint8_t memory_read_data(Memory_t *mem, uint8_t address);
+void memory_write_data(Memory_t *mem, uint8_t address, uint8_t value);
+int memory_load_program(Memory_t *mem, const uint8_t *program, uint16_t size, uint16_t start_address);
+void update_sfr_from_timer0(Memory_t *mem);
+void update_sfr_from_timer1(Memory_t *mem);
 
 #endif
