@@ -59,11 +59,11 @@ typedef struct {
 } Sfr_t;
 
 typedef struct {
-	internal_ram_t ram;
-	sfr_t sfr;
+	Internal_ram_t ram;
+	Sfr_t sfr;
 	uint8_t internal_rom[INTERNAL_ROM_SIZE];
 
-	timer_system_t *timers;
+	Timer_system_t *timers; // just to make it easier :) 
 
 } Memory_t;
 
