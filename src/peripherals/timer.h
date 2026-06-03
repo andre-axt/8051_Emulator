@@ -34,7 +34,7 @@ typedef struct {
 	
 } Timers_system_t;
 
-int init_timers(Timers_system_t *timers);
+Timers_system_t* init_timers();
 void update_timers(Memory_t *mem, uint32_t cycles);
 
 #endif
