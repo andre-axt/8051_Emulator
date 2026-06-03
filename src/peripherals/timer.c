@@ -3,13 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-int init_timers (Timers_system_t *timers) {
-	if(timers == NULL) return 1;
+Timers_system_t* init_timers() {
+	Timers_system_t *timers;
+	timers = malloc(sizeof(Timers_system_t);
+	if(timers == NULL) return NULL;
 
 	timers->timer0 = 0;
 	timers->timer1 = 0;
 
-	return 0;
+	return timers;
 
 }
 
