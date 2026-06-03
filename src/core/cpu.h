@@ -12,9 +12,7 @@ typedef struct {
 } Cpu_t;
 
 void cpu_init(Cpu_t *cpu);
-uint8_t fetch_byte(Cpu_t *cpu);
-uint16_t fetch_word(Cpu_t *cpu);
-void cpu_step(Cpu_t *cpu);
+void cpu_step(Cpu_t *cpu, Memory_t *mem);
 void cpu_run(Cpu_t *cpu, uint32_t steps);
 
 #endif
