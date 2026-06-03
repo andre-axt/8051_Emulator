@@ -1,11 +1,16 @@
 #include "interruptions.h"
 
-void init_int(Interruptions *interruptions){
+Interruptions_t* init_int(){
+  Interruptions_t *interruptions;
+  interruptions = malloc(sizeof(Interruptions_t));
+  
+  if(interruptions == NULL) return NULL;
   interruptions->INT0 = 1;
   interruptions->Timer0 = 1;
   interruptions->INT1 = 1;
   interruptions->Timer1 = 1;
   interruptions->Serial = 1;
+  return interruptions;
   
 }
 
