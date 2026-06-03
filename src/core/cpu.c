@@ -14,12 +14,6 @@ void cpu_init(Cpu_t *cpu) {
 	cpu->SP = NULL;
 }
 
-uint16_t fetch_word(Cpu_t cpu*) {
-	uint8_t low = fetch_byte(cpu);
-	uint8_t high = fetch_byte(cpu);
-	return (high << 8) | low;
-}
-
 void cpu_step(Cpu_t *cpu, Memory_t *mem) {
 	if (cpu->halted) return;
 
