@@ -67,7 +67,7 @@ typedef struct {
 
 } Memory_t;
 
-int memory_init(Memory_t *mem);
+Memory_t* memory_init();
 uint8_t memory_read_code(Memory_t *mem, uint16_t address);
 uint8_t memory_read_data(Memory_t *mem, uint8_t address);
 void memory_write_data(Memory_t *mem, uint8_t address, uint8_t value);
