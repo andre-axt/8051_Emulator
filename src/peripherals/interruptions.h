@@ -31,7 +31,7 @@ typedef struct {
 	uint8_t *IP;
 } Interruptions_t
 
-int8_t init_int(Interruptions_t *interruptions); //Just reset all interrupts to 1
+Interruptions_t* init_int();
 int8_t check_int(Interruptions_t *interruptions); // returns 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial 
 int8_t get_priority(uint8_t *IP, int8_t handler);
 inline void lock_int(uint16_t *pc, int8_t handler); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
