@@ -11,7 +11,7 @@ typedef struct {
 
 } Cpu_t;
 
-void cpu_init(Cpu_t *cpu);
+Cpu_t* cpu_init();
 void cpu_step(Cpu_t *cpu, Memory_t *mem);
 void cpu_run(Cpu_t *cpu, uint32_t steps);
 
