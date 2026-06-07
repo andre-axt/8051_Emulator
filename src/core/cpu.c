@@ -5,13 +5,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-void cpu_init(Cpu_t *cpu) {
-	memset(cpu, 0, sizeof(cpu_t));
-
+Cpu_t* cpu_init() {
+	Cpu_t *cpu;
+	cpu = malloc(sizeof(cpu_t));
+	if(cpu == NULL) return NULL;
 	cpu->total_cycles = 0;
 	cpu->PC = 0x0000;
 	cpu->halted = 0;
 	cpu->SP = NULL;
+	return cpu;
 }
 
 void cpu_step(Cpu_t *cpu, Memory_t *mem) {
