@@ -59,3 +59,8 @@ static uint8_t set_bit(cpu_t *cpu, uint8_t bit_addr, uint8_t value) {
 	
 	memory_write_data(cpu->mem, byte_addr, byte);
 }
+
+void instr_nop(cpu_t *cpu) {
+	cpu->PC++;
+	return;
+}
