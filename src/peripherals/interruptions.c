@@ -1,4 +1,5 @@
 #include "interruptions.h"
+#include <stdlib.h>
 
 Interruptions_t* init_int(){
   Interruptions_t *interruptions;
