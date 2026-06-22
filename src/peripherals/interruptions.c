@@ -104,7 +104,7 @@ inline void set_int(Interruptions_t *interruptions, int8_t handler) {
       return;
     }
     case 6: {
-      interruptions->EA = 0;
+      interruptions->IE = 0;
       return;
     }
   }
