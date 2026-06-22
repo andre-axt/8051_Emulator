@@ -1,6 +1,7 @@
 #ifndef INTERRUPTIONS_H
 #define INTERRUPTIONS_H
 #include <stdint.h>
+#include <stddef.h>
 
 #define INT0 0x03
 #define TIMER0 0x0B
@@ -22,17 +23,17 @@
 #define IP_PS	 (1 << 4)
 
 typedef struct {
-  	int8_t INT0;
+  	int8_t Int0;
   	int8_t Timer0;
-  	int8_t INT1;
+  	int8_t Int1;
   	int8_t Timer1;
   	int8_t Serial;
   	uint8_t *IE; 
 	uint8_t *IP;
-} Interruptions_t
+} Interruptions_t;
 
 Interruptions_t* init_int();
 int8_t check_int(Interruptions_t *interruptions); // returns 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial 
 int8_t get_priority(uint8_t *IP, int8_t handler);
 inline void lock_int(uint16_t *pc, int8_t handler); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
-inline void set_int(Interruptions_t *interruptions, int8_t handler) // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
+inline void set_int(Interruptions_t *interruptions, int8_t handler); // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
