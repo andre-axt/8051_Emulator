@@ -1,0 +1,39 @@
+# Prerequisites
+*.d
+
+# Object files and Libraries
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Local build directories
+obj/
+bin/
+
+# Final Executable
+# (Matches the TARGET name in your Makefile)
+program
+
+# Backup and temporary files
+*~
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
