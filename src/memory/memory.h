@@ -2,7 +2,6 @@
 #define MEMORY_H
 
 #include <stdint.h>
-#include <timer.h>
 
 #define INTERNAL_ROM_SIZE 4096
 #define INTERNAL_RAM_SIZE 128
@@ -51,10 +50,10 @@ typedef struct {
 
 	uint8_t TMOD;
 	uint8_t TCON;
-	uint8_t TL0;
-	uint8_t TH0;
-	uint8_t TL1;
-	uint8_t TH1;
+	uint8_t *TL0;
+	uint8_t *TH0;
+	uint8_t *TL1;
+	uint8_t *TH1;
 
 } Sfr_t;
 
@@ -63,8 +62,6 @@ typedef struct {
 	Sfr_t sfr;
 	uint8_t internal_rom[INTERNAL_ROM_SIZE];
 
-	Timers_system_t *timers; // just to make it easier :) 
-
 } Memory_t;
 
 Memory_t* memory_init();
@@ -72,7 +69,5 @@ uint8_t memory_read_code(Memory_t *mem, uint16_t address);
 uint8_t memory_read_data(Memory_t *mem, uint8_t address);
 void memory_write_data(Memory_t *mem, uint8_t address, uint8_t value);
 int memory_load_program(Memory_t *mem, const uint8_t *program, uint16_t size, uint16_t start_address);
-void update_sfr_from_timer0(Memory_t *mem);
-void update_sfr_from_timer1(Memory_t *mem);
 
 #endif
