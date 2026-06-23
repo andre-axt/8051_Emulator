@@ -33,6 +33,10 @@ int main(){
 		free(8051);
 		return 1;
 	} 
+	&8051->mem->sfr.TL0 = (uint8_t *)&8051->timers->timer0;
+	&8051->mem->sfr.TH0 = ((uint8_t *)&8051->timers->timer0) + 1;
+	&8051->mem->sfr.TL1 = (uint8_t *)&8051->timers->timer1;
+	&8051->mem->sfr.TH1 = ((uint8_t *)&8051->timers->timer1) + 1;
 	8051->intpt = init_int();
 	if (8051->inipt == NULL){
 		free(8051->cpu);
