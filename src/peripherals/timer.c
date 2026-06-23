@@ -62,14 +62,14 @@ void update_timers(Timers_system_t* timers, Memory_t *mem, uint32_t cycles) {
 		switch(mode1) {
 			case 0:
 				if (t1 >= 0x1FFF) {
-					t0 = 0;
+					t1 = 0;
 					mem->sfr.TCON |= TCON_TF1_MASK;
 				}
 				break;
 
 			case 1:
 				if (t1 >= 0xFFFF) {
-					t0 = 0;
+					t1 = 0;
 					mem->sfr.TCON |= TCON_TF1_MASK;
 				}
 				break;
