@@ -7,7 +7,7 @@
 
 Cpu_t* cpu_init() {
 	Cpu_t *cpu;
-	cpu = malloc(sizeof(cpu_t));
+	cpu = malloc(sizeof(Cpu_t));
 	if(cpu == NULL) return NULL;
 	cpu->total_cycles = 0;
 	cpu->PC = 0x0000;
@@ -16,21 +16,20 @@ Cpu_t* cpu_init() {
 	return cpu;
 }
 
-void cpu_step(Cpu_t *cpu, Memory_t *mem) {
+void cpu_step(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers) {
 	if (cpu->halted) return;
 
 	uint8_t opcode = fetch_byte(cpu);
-	instruction_t *instr = &opcode_table[opcode];
+	Instruction_t *instr = &opcode_table[opcode];
 	
 	if (instr->execute == NULL) {
-        	printf("ERROR: Unimplemented opcode 0x%02X at 0x%04X\n", opcode, current_pc);
         	cpu->halted = 1;
         	return;
     	}
 
 	instr->execute(cpu);
 	cpu->total_cycles += instr->cycles;
-	update_timers(mem, cpu->total_cycles);
+	update_timers(timers, mem, cpu->total_cycles);
 }
 
 void cpu_run(Cpu_t *cpu, uint32_t steps) {
