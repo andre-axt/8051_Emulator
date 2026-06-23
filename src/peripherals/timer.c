@@ -5,7 +5,7 @@
 
 Timers_system_t* init_timers() {
 	Timers_system_t *timers;
-	timers = malloc(sizeof(Timers_system_t);
+	timers = malloc(sizeof(Timers_system_t));
 	if(timers == NULL) return NULL;
 
 	timers->timer0 = 0;
@@ -30,20 +30,20 @@ void update_timers(Memory_t *mem, uint32_t cycles) {
 			case 0:
 				if (t0 >= 0x1FFF) {
 					t0 = 0;
-					mem->sfr.TCON |= TCON_F0_MASK;
+					mem->sfr.TCON |= TCON_TF0_MASK;
 				}	
 				break;
 
 			case 1:
 				if (t0 >= 0xFFFF) {
 					t0 = 0;
-					mem->sfr.TCON |= TCON_F0_MASK;
+					mem->sfr.TCON |= TCON_TF0_MASK;
 				}
 				break;		
 				
 			case 2: 
 				if (t0 >= 0x00FF) {
-					t0 = (t0 & 0xFF00) + mem->sfr.THO;
+					t0 = (t0 & 0xFF00) + mem->sfr.TH0;
 					mem->sfr.TCON |= TCON_TF0_MASK;
 
 				}
@@ -64,14 +64,14 @@ void update_timers(Memory_t *mem, uint32_t cycles) {
 			case 0:
 				if (t1 >= 0x1FFF) {
 					t0 = 0;
-					mem->sfr.TCON |= TCON_F1_MASK;
+					mem->sfr.TCON |= TCON_TF1_MASK;
 				}
 				break;
 
 			case 1:
 				if (t1 >= 0xFFFF) {
 					t0 = 0;
-					mem->sfr.TCON |= TCON_F1_MASK;
+					mem->sfr.TCON |= TCON_TF1_MASK;
 				}
 				break;
 		
