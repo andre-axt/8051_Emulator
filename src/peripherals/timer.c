@@ -43,7 +43,7 @@ void update_timers(Timers_system_t* timers, Memory_t *mem, uint32_t cycles) {
 				
 			case 2: 
 				if (t0 >= 0x00FF) {
-					t0 = (uint16_t) (t0 & 0xFF00) + mem->sfr.TH0;
+					t0 &= 0xFF00;
 					mem->sfr.TCON |= TCON_TF0_MASK;
 
 				}
@@ -76,7 +76,7 @@ void update_timers(Timers_system_t* timers, Memory_t *mem, uint32_t cycles) {
 		
 			case 2: 
 				if (t1 >= 0x00FF) {
-					t1 = (uint16_t) (t1 & 0xFF00) + mem->sfr.TH1;
+					t1 &= 0xFF00;
 					mem->sfr.TCON |= TCON_TF1_MASK;
 				}
 
