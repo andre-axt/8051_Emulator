@@ -63,7 +63,7 @@ typedef struct {
 	Sfr_t sfr;
 	uint8_t internal_rom[INTERNAL_ROM_SIZE];
 
-	Timer_system_t *timers; // just to make it easier :) 
+	Timers_system_t *timers; // just to make it easier :) 
 
 } Memory_t;
 
