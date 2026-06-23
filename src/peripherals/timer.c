@@ -15,8 +15,8 @@ Timers_system_t* init_timers() {
 
 }
 
-void update_timers(Memory_t *mem, uint32_t cycles) {
-	if (mem->timers == NULL) return;
+void update_timers(Timers_system_t* timers, Memory_t *mem, uint32_t cycles) {
+	if (timers == NULL) return;
 
 	uint8_t tmod = mem->sfr.TMOD;
 	uint8_t tcon = mem->sfr.TCON;
@@ -43,7 +43,7 @@ void update_timers(Memory_t *mem, uint32_t cycles) {
 				
 			case 2: 
 				if (t0 >= 0x00FF) {
-					t0 = (t0 & 0xFF00) + mem->sfr.TH0;
+					t0 = (uint16_t) (t0 & 0xFF00) + mem->sfr.TH0;
 					mem->sfr.TCON |= TCON_TF0_MASK;
 
 				}
@@ -76,7 +76,7 @@ void update_timers(Memory_t *mem, uint32_t cycles) {
 		
 			case 2: 
 				if (t1 >= 0x00FF) {
-					t1 = (t1 & 0xFF00) + mem->sfr.TH1;
+					t1 = (uint16_t) (t1 & 0xFF00) + mem->sfr.TH1;
 					mem->sfr.TCON |= TCON_TF1_MASK;
 				}
 
