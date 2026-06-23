@@ -1,5 +1,4 @@
 #include "memory.h"
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
@@ -25,10 +24,6 @@ Memory_t* memory_init(){
 	mem->sfr.B = 0x00;
 	mem->sfr.SBUF = 0x00;
 	mem->sfr.SCON = 0x00;
-	mem->sfr.TH0 = 0x00;
-	mem->sfr.TL0 = 0x00;
-	mem->sfr.TH1 = 0x00;
-	mem->sfr.TL1 = 0x00;
 	mem->sfr.DPH = 0x00;
 	mem->sfr.DPL = 0x00;
 
@@ -121,28 +116,6 @@ static void memory_write_sfr (Memory_t *mem, uint8_t address, uint8_t value) {
         
         	default: break;
     	}
-	
-	if (mem->timers != NULL){
-		switch (address) {
-			case (0x88):
-				mem->timers->TCON = value; 
-				write_timers(mem->timers);
-				break;
-
-			case (0x89):
-				mem->timers->TMOD = value;
-				write_timers(mem->timers);	
-				break;
-
-			case 0x8A: case 0x8B: case 0x8C: case 0x8D:
-				if (address == 0x8A) mem->timers->timer0.TL = value;
-                		if (address == 0x8C) mem->timers->timer0.TH = value;
-                		if (address == 0x8B) mem->timers->timer1.TL = value;
-                		if (address == 0x8D) mem->timers->timer1.TH = value;
-               			write_timers(mem->timers);
-		}
-	
-	}
 
 }
 
