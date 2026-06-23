@@ -1,7 +1,7 @@
 #include "cpu.h"
 #include "memory.h"
 #include "timer.h"
-#include "opcode"
+#include "opcodes.h"
 #include <stdlib.h>
 #include <string.h>
 

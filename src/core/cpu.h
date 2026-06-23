@@ -2,7 +2,7 @@
 #define CPU_H
 
 #include <stdint.h>
-
+#include "memory.h"
 typedef struct {
 	uint16_t PC;
 	uint8_t *SP;
