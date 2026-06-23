@@ -22,7 +22,7 @@ void update_timers(Memory_t *mem, uint32_t cycles) {
 	uint8_t tcon = mem->sfr.TCON;
 
 	if (tcon & TCON_TR0_MASK) {
-		uint16_t t0 = mem->timers->timer0;
+		uint16_t t0 = timers->timer0;
 		uint8_t mode0 = tmod & 0x03; 
 		
 		t0 += cycles;
@@ -50,13 +50,12 @@ void update_timers(Memory_t *mem, uint32_t cycles) {
 				break;
 		}
 
-		mem->timers->timer0 = t0;
-		update_sfr_from_timer0(mem);
+		timers->timer0 = t0;
 	
 	}
 
 	if (tcon & TCON_TR1_MASK) {
-		uint16_t t1 = mem->timers->timer1;
+		uint16_t t1 = timers->timer1;
 		uint8_t mode1 = (tmod >> 4) & 0x03;
 	
 		t1 += cycles;
@@ -84,10 +83,8 @@ void update_timers(Memory_t *mem, uint32_t cycles) {
 
 		}
 
-		mem->timers->timer1 = t1;
-		update_sfr_from_timer1(mem);
+		timers->timer1 = t1;
 
 	}
-
 
 }
