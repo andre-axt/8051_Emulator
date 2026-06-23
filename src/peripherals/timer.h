@@ -1,6 +1,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#include "memory.h"
 #include <stdint.h>
 
 #define TMOD_ADDR 0x89
