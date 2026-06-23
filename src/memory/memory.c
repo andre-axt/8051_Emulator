@@ -171,25 +171,3 @@ int memory_load_program (Memory_t *mem, const uint8_t *program, const uint16_t s
 	return 1;
 
 }
-
-void update_sfr_from_timer0(Memory_t *mem) {
-	
-	if (mem->timers == NULL) return;
-
-	uint16_t timer0 = mem->timers->timer0;
-
-	mem->sfr.TL0 = timer0 & 0xFF;
-	mem->sfr.TH0 = (timer0 >> 8) & 0xFF;
-
-}
-
-void update_sfr_from_timer1(Memory_t *mem) {
-	
-	if (mem->timers == NULL) return;
-
-	uint16_t timer1 = mem->timers->timer1;
-
-	mem->sfr.TL1 = timer1 & 0xFF;
-	mem->sfr.TH1 = (timer1 >> 8) & 0xFF;
-
-}
