@@ -37,3 +37,4 @@ int8_t check_int(Interruptions_t *interruptions); // returns 0 = nothing, 1 = IN
 int8_t get_priority(uint8_t *IP, int8_t handler);
 inline void lock_int(uint16_t *pc, int8_t handler); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
 inline void set_int(Interruptions_t *interruptions, int8_t handler); // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
+#endif
