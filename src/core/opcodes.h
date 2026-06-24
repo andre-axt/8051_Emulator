@@ -9,9 +9,9 @@ typedef struct {
 	uint8_t cycles;
 	void (*execute)(Cpu_t *);
 
-} Instrunction_t;
+} Instruction_t;
 
-extern instruction_t opcode_table[256];
+extern Instruction_t opcode_table[256];
 
 void instr_nop(Cpu_t *cpu);
 void instr_ljmp(Cpu_t *cpu);
