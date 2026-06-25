@@ -32,9 +32,9 @@ void cpu_step(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers) {
 	update_timers(timers, mem, cpu->total_cycles);
 }
 
-void cpu_run(Cpu_t *cpu, uint32_t steps) {
+void cpu_run(Cpu_t *cpu, uint32_t steps, Memory_t *mem, Timers_system_t *timers) {
 	for (uint32_t i = 0; i < steps && !cpu->halted; i++) {
-		cpu_step(cpu);
+		cpu_step(cpu, mem, timers);
 	}
 
 }
