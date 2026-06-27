@@ -9,7 +9,7 @@ static uint8_t get_bit(cpu_t *cpu, uint8_t bit_addr) {
 		return (byte >> bit_pos) & 1;
 	} 
 
-	else if (bit addr >= 0x80) {
+	else if (bit_addr >= 0x80) {
 		uint8_t sfr_addr = bit_addr & 0xF8;
 		uint8_t bit_pos = bit_addr & 0x07;
 
@@ -44,7 +44,7 @@ static uint8_t get_bit(cpu_t *cpu, uint8_t bit_addr) {
 
 }
 
-static uint8_t set_bit(cpu_t *cpu, uint8_t bit_addr, uint8_t value) {
+static void set_bit(cpu_t *cpu, uint8_t bit_addr, uint8_t value) {
 	uint8_t byte_offset = bit_addr >> 3;
 	uint8_t byte_addr = 0x20 +byte_offset;
 	uint8_t bit_pos = bit_addr & 0x07;
