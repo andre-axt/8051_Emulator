@@ -13,7 +13,7 @@ typedef struct {
 8051_t *8051;
 
 int main(){
-	8051 = malloc(sizeof(8051_t);
+	8051 = malloc(sizeof(8051_t));
 	if (8051 == NULL) return 1;
 	8051->cpu = cpu_init();
 	if (8051->cpu == NULL){
@@ -38,7 +38,7 @@ int main(){
 	&8051->mem->sfr.TL1 = (uint8_t *)&8051->timers->timer1;
 	&8051->mem->sfr.TH1 = ((uint8_t *)&8051->timers->timer1) + 1;
 	8051->intpt = init_int();
-	if (8051->inipt == NULL){
+	if (8051->intpt == NULL){
 		free(8051->cpu);
 		free(8051->mem);
 		free(8051->timers);
