@@ -144,3 +144,25 @@ int memory_load_program (Memory_t *mem, const uint8_t *program, const uint16_t s
 	return 1;
 
 }
+
+void stack_push_byte(Memory_t *mem, uint8_t value) {
+	mem->sfr.SP++;
+	memory_write_data(mem, mem->sfr.SP, value);
+}
+
+uint8_t stack_pop_byte(Memory_t *mem) {
+    uint8_t value = memory_read_data(mem, mem->sfr.SP);
+    mem->sfr.SP--; 
+    return value;
+}
+
+void stack_push_word(Memory_t *mem, uint16_t word) {
+    stack_push_byte(mem, word & 0xFF);         
+    stack_push_byte(mem, (word >> 8) & 0xFF);  
+}
+
+uint16_t stack_pop_word(Memory_t *mem) {
+    uint8_t high = stack_pop_byte(mem);        
+    uint8_t low = stack_pop_byte(mem);         
+    return (uint16_t)((high << 8) | low);
+}
