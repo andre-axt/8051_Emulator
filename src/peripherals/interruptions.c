@@ -19,31 +19,31 @@ int8_t get_priority(uint8_t *IP, int8_t handler) {
   if(handler == 0) return -1;
   switch(handler) {
     case 1: {
-      if(*IP && IP_PX0) {
+      if(*IP & IP_PX0) {
         return 1;
       }	
       return 0;
     }
     case 2: {
-      if(*IP && IP_PT0) {
+      if(*IP & IP_PT0) {
         return 1;
       }	
       return 0;
     }
     case 3: {
-      if(*IP && IP_PX1) {
+      if(*IP & IP_PX1) {
         return 1;
       }	
       return 0;
     }
     case 4: {
-      if(*IP && IP_PT1) {
+      if(*IP & IP_PT1) {
         return 1;
       }	
       return 0;
     }
     case 5: {
-      if(*IP && IP_PS) {
+      if(*IP & IP_PS) {
         return 1;
       }	
       return 0;
