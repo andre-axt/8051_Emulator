@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include "memory.h"
 #include "timer.h"
+#include "interruptions.h"
+
 typedef struct {
 	uint16_t PC;
 	uint8_t *SP;
@@ -13,7 +15,7 @@ typedef struct {
 } Cpu_t;
 
 Cpu_t* cpu_init();
-void cpu_step(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers);
-void cpu_run(Cpu_t *cpu, uint32_t steps);
+void cpu_step(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers, Interruptions_t *intpt); // Maybe I'll replace it with the 8051_t struct.
+void cpu_run(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers, Interruptions_t *intpt, uint32_t steps);
 
 #endif
