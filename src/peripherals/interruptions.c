@@ -1,7 +1,7 @@
 #include "interruptions.h"
 #include <stdlib.h>
 
-Interruptions_t* init_int(){
+Interruptions_t* init_intpt(){
   Interruptions_t *interruptions;
   interruptions = malloc(sizeof(Interruptions_t));
   
@@ -15,7 +15,7 @@ Interruptions_t* init_int(){
   
 }
 
-int8_t get_priority(uint8_t *IP, int8_t handler) {
+int8_t get_priority_from_intpt(uint8_t *IP, int8_t handler) {
   if(handler == 0) return -1;
   switch(handler) {
     case 1: {
@@ -53,7 +53,7 @@ int8_t get_priority(uint8_t *IP, int8_t handler) {
   return -1;
 }
 
-inline void lock_int(uint16_t *pc, int8_t handler) {
+inline void lock_intpt(uint16_t *pc, int8_t handler) {
   if(handler == 0) return;
   switch(handler) {
     case 1: {
@@ -80,7 +80,7 @@ inline void lock_int(uint16_t *pc, int8_t handler) {
   return;
 }
 
-inline void set_int(Interruptions_t *interruptions, int8_t handler) {
+inline void set_intpt(Interruptions_t *interruptions, int8_t handler) {
   if(handler == 0) return;
   switch(handler) {
     case 1: {
