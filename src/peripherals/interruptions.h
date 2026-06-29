@@ -32,9 +32,9 @@ typedef struct {
 	uint8_t *IP;
 } Interruptions_t;
 
-Interruptions_t* init_int();
-int8_t check_int(Interruptions_t *interruptions); // returns 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial 
-int8_t get_priority(uint8_t *IP, int8_t handler);
-inline void lock_int(uint16_t *pc, int8_t handler); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
-inline void set_int(Interruptions_t *interruptions, int8_t handler); // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
+Interruptions_t* init_intpt();
+int8_t check_intpt(Interruptions_t *interruptions); // returns 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial 
+int8_t get_priority_from_intpt(uint8_t *IP, int8_t handler);
+inline void lock_intpt(uint16_t *pc, int8_t handler); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
+inline void set_intpt(Interruptions_t *interruptions, int8_t handler); // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
 #endif
