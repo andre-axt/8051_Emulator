@@ -15,6 +15,18 @@ Interruptions_t* init_intpt(){
   
 }
 
+int8_t check_intpt(Interruptions_t *intpts) {
+  if(intpts == NULL) return -1;
+  
+  for (int i = 0; i <= 4; i++) {
+    if(intpts->IP & (1 << i)) {
+      return i + 1;
+    }
+  } 
+  return 1;
+  
+}
+
 int8_t get_priority_from_intpt(uint8_t *IP, int8_t handler) {
   if(handler == 0) return -1;
   switch(handler) {
