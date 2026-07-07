@@ -1,9 +1,13 @@
-#include "cpu.h"
-#include "memory.h"
-#include "timer.h"
+#include "system.h"
 #include "opcodes.h"
 #include <stdlib.h>
 #include <string.h>
+
+uint8_t fetch_byte(Mcu8051_t *mcu) {
+    uint8_t instruction = mcu->mem->internal_rom[mcu->cpu->PC][0]; 
+    mcu->cpu->PC++;
+    return instruction;
+}
 
 Cpu_t* cpu_init() {
 	Cpu_t *cpu;
@@ -16,14 +20,14 @@ Cpu_t* cpu_init() {
 	return cpu;
 }
 
-void cpu_step(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers) {
-	if (cpu->halted) return;
+void cpu_step(Mcu8051_t *mcu) {
+	if (mcu->cpu->halted) return;
 
-	uint8_t opcode = fetch_byte(cpu);
+	uint8_t opcode = fetch_byte(mcu);
 	Instruction_t *instr = &opcode_table[opcode];
 	
 	if (instr->execute == NULL) {
-        	cpu->halted = 1;
+        	mcu->cpu->halted = 1;
         	return;
     	}
 
@@ -32,9 +36,9 @@ void cpu_step(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers) {
 	update_timers(timers, mem, cpu->total_cycles);
 }
 
-void cpu_run(Cpu_t *cpu, uint32_t steps, Memory_t *mem, Timers_system_t *timers) {
-	for (uint32_t i = 0; i < steps && !cpu->halted; i++) {
-		cpu_step(cpu, mem, timers);
+void cpu_run(Mcu8051_t *mcu, uint32_t steps) {
+	for (uint32_t i = 0; i < steps && !mcu->cpu->halted; i++) {
+		cpu_step(mcu);
 	}
 
 }
