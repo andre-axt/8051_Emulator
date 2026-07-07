@@ -6,7 +6,7 @@
 #include "timer.h"
 #include "interruptions.h"
 
-typedef struct {
+typedef struct Mcu8051_t {
     Cpu_t *cpu;
     Memory_t *mem;
     Timers_system_t *timers;
