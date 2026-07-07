@@ -19,7 +19,7 @@ int8_t check_intpt(Interruptions_t *intpts) {
   if(intpts == NULL) return -1;
   
   for (int i = 0; i <= 4; i++) {
-    if(intpts->IP & (1 << i)) {
+    if(*intpts->IP & (1 << i)) {
       return i + 1;
     }
   } 
