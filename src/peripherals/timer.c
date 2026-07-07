@@ -8,11 +8,7 @@ Timers_system_t* init_timers() {
 	timers = malloc(sizeof(Timers_system_t));
 	if(timers == NULL) return NULL;
 
-	timers->timer0 = 0;
-	timers->timer1 = 0;
-
 	return timers;
-
 }
 
 void update_timers(Mcu8051_t *mcu, uint32_t cycles) {
@@ -22,7 +18,7 @@ void update_timers(Mcu8051_t *mcu, uint32_t cycles) {
 	uint8_t tcon = mcu->mem->sfr.TCON;
 
 	if (tcon & TCON_TR0_MASK) {
-		uint16_t t0 = mcu->timers->timer0;
+		uint16_t t0 = ((uint16_t)mcu->mem->sfr.TH0 << 8) | mcu->mem->sfr.TL0;
 		uint8_t mode0 = tmod & 0x03; 
 		
 		t0 += cycles;
@@ -50,12 +46,13 @@ void update_timers(Mcu8051_t *mcu, uint32_t cycles) {
 				break;
 		}
 
-		mcu->timers->timer0 = t0;
+		mcu->mem->sfr.TH0 = (uint8_t)(t0 >> 8);
+		mcu->mem->sfr.TL0 = (uint8_t)(t0 & 0xFF);
 	
 	}
 
 	if (tcon & TCON_TR1_MASK) {
-		uint16_t t1 = mcu->timers->timer1;
+		uint16_t t1 = ((uint16_t)mcu->mem->sfr.TH1 << 8) | mcu->mem->sfr.TL1;
 		uint8_t mode1 = (tmod >> 4) & 0x03;
 	
 		t1 += cycles;
@@ -83,7 +80,8 @@ void update_timers(Mcu8051_t *mcu, uint32_t cycles) {
 
 		}
 
-		mcu->timers->timer1 = t1;
+		mcu->mem->sfr.TH1 = (uint8_t)(t1 >> 8);
+		mcu->mem->sfr.TL1 = (uint8_t)(t1 & 0xFF);
 
 	}
 
