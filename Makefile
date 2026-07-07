@@ -1,7 +1,7 @@
 TARGET = program
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11
+CFLAGS = -Wall -Wextra -Werror -std=c11 -MMD -MP
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -9,6 +9,8 @@ OBJ_DIR = obj
 SRCS = $(shell find $(SRC_DIR) -name "*.c")
 
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+
+DEPS = $(OBJS:.o=.d)
 
 INCLUDES = $(addprefix -I, $(shell find $(SRC_DIR) -type d))
 CFLAGS += $(INCLUDES)
@@ -30,5 +32,7 @@ clean:
 
 run: all
 	./$(TARGET)
+
+-include $(DEPS)
 
 .PHONY: all clean run
