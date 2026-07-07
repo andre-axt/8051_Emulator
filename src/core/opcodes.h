@@ -1,44 +1,44 @@
 #ifndef OPCODES_H
 #define OPCODES_H
 
-#include "cpu.h"
+typedef struct Mcu8051_t Mcu8051_t;
 
 typedef struct {
 	char *mnemonic;
 	uint8_t bytes;
 	uint8_t cycles;
-	void (*execute)(Cpu_t *);
+	void (*execute)(Mcu8051_t *);
 
 } Instruction_t;
 
 extern Instruction_t opcode_table[256];
 
-void instr_nop(Cpu_t *cpu);
-void instr_ljmp(Cpu_t *cpu);
-void instr_sjmp(Cpu_t *cpu);
-void instr_ajmp(Cpu_t *cpu);
-void instr_mov_a_immed(Cpu_t *cpu);
-void instr_mov_direct_immed(Cpu_t *cpu);
-void instr_mov_a_direct(Cpu_t *cpu);
-void instr_mov_direct_a(Cpu_t *cpu);
-void instr_add_a_immed(Cpu_t *cpu);
-void instr_setb(Cpu_t *cpu);
-void instr_clr(Cpu_t *cpu);
-void instr_cpl(Cpu_t *cpu);
-void instr_jnb(Cpu_t *cpu);
-void instr_jb(Cpu_t *cpu);
-void instr_jbc(Cpu_t *cpu);
-void instr_anl_a_immed(Cpu_t *cpu);
-void instr_orl_a_immed(Cpu_t *cpu);
-void instr_xrl_a_immed(Cpu_t *cpu);
-void instr_inc_a(Cpu_t *cpu);
-void instr_dec_a(Cpu_t *cpu);
-void instr_push(Cpu_t *cpu);
-void instr_pop(Cpu_t *cpu);
-void instr_ret(Cpu_t *cpu);
-void instr_reti(Cpu_t *cpu);
+void instr_nop(Mcu8051_t *mcu);
+void instr_ljmp(Mcu8051_t *mcu);
+void instr_sjmp(Mcu8051_t *mcu);
+void instr_ajmp(Mcu8051_t *mcu);
+void instr_mov_a_immed(Mcu8051_t *mcu);
+void instr_mov_direct_immed(Mcu8051_t *mcu);
+void instr_mov_a_direct(Mcu8051_t *mcu);
+void instr_mov_direct_a(Mcu8051_t *mcu);
+void instr_add_a_immed(Mcu8051_t *mcu);
+void instr_setb(Mcu8051_t *mcu);
+void instr_clr(Mcu8051_t *mcu);
+void instr_cpl(Mcu8051_t *mcu);
+void instr_jnb(Mcu8051_t *mcu);
+void instr_jb(Mcu8051_t *mcu);
+void instr_jbc(Mcu8051_t *mcu);
+void instr_anl_a_immed(Mcu8051_t *mcu);
+void instr_orl_a_immed(Mcu8051_t *mcu);
+void instr_xrl_a_immed(Mcu8051_t *mcu);
+void instr_inc_a(Mcu8051_t *mcu);
+void instr_dec_a(Mcu8051_t *mcu);
+void instr_push(Mcu8051_t *mcu);
+void instr_pop(Mcu8051_t *mcu);
+void instr_ret(Mcu8051_t *mcu);
+void instr_reti(Mcu8051_t *mcu);
 
-extern uint8_t fetch_byte(Cpu_t *cpu);
-extern uint16_t fetch_word(Cpu_t *cpu);
+extern uint8_t fetch_byte(Mcu8051_t *mcu);
+extern uint16_t fetch_word(Mcu8051_t *mcu);
 
 #endif

@@ -1,8 +1,9 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "memory.h"
 #include <stdint.h>
+
+typedef struct Mcu8051_t Mcu8051_t;
 
 #define TMOD_ADDR 0x89
 #define TCON_ADDR 0x88
@@ -30,12 +31,12 @@
 #define TMOD_M0_0_MASK (1 << 0)
 
 typedef struct {
-	uint16_t timer0;
-	uint16_t timer1;
-	
+	//uint16_t timer0;
+	//uint16_t timer1; I really don't know what I'm going to do here, probably add a few variables for future debugging or something like that.
+		
 } Timers_system_t;
 
 Timers_system_t* init_timers();
-void update_timers(Timers_system_t* timers, Memory_t *mem, uint32_t cycles);
+void update_timers(Mcu8051_t *mcu, uint32_t cycles);
 
 #endif

@@ -26,7 +26,11 @@ Memory_t* memory_init(){
 	mem->sfr.SCON = 0x00;
 	mem->sfr.DPH = 0x00;
 	mem->sfr.DPL = 0x00;
-
+	
+	mem->sfr.TL0 = 0x00;
+	mem->sfr.TH0 = 0x00;
+	mem->sfr.TL1 = 0x00;
+	mem->sfr.TH1 = 0x00;
 		
 	mem->sfr.P0 = 0xFF;	
 	mem->sfr.P1 = 0xFF;
