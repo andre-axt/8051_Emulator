@@ -2,20 +2,18 @@
 #define CPU_H
 
 #include <stdint.h>
-#include "memory.h"
-#include "timer.h"
-#include "interruptions.h"
+
+typedef struct Mcu8051_t Mcu8051_t;
 
 typedef struct {
 	uint16_t PC;
-	uint8_t *SP;
 	uint64_t total_cycles;
 	uint8_t halted;	
 
 } Cpu_t;
 
 Cpu_t* cpu_init();
-void cpu_step(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers, Interruptions_t *intpt); // Maybe I'll replace it with the 8051_t struct.
-void cpu_run(Cpu_t *cpu, Memory_t *mem, Timers_system_t *timers, Interruptions_t *intpt, uint32_t steps);
+void cpu_step(Mcu8051_t *mcu); 
+void cpu_run(Mcu8051_t *mcu, uint32_t steps);
 
 #endif
