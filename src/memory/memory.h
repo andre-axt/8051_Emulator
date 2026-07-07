@@ -50,10 +50,10 @@ typedef struct {
 
 	uint8_t TMOD;
 	uint8_t TCON;
-	uint8_t *TL0;
-	uint8_t *TH0;
-	uint8_t *TL1;
-	uint8_t *TH1;
+	uint8_t TL0;
+	uint8_t TH0;
+	uint8_t TL1;
+	uint8_t TH1;
 
 } Sfr_t;
 
