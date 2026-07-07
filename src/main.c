@@ -1,49 +1,32 @@
-#include "interruptions.h"
-#include "timers.h"
-#include "memory.h"
-#include "cpu.h"
+#include "system.h"
+#include <stdlib.h>
 
-typedef struct {
-	Interruptions_t *intpt;
-	Timers_system_t *timers;
-	Memory_t *mem;
-	Cpu_t *cpu;
-} 8051_t; // It will stay here until I think of a better place to put this struct.
-
-8051_t *8051;
+typedef struct Mcu8051_t Mcu8051_t;
 
 int main(){
-	8051 = malloc(sizeof(8051_t));
-	if (8051 == NULL) return 1;
-	8051->cpu = cpu_init();
-	if (8051->cpu == NULL){
-		free(8051);
-		return 1;
+	Mcu8051_t *mcu = malloc(sizeof(Mcu8051_t));
+	if (mcu == NULL) return 1;
+	
+	mcu->cpu = cpu_init();
+    mcu->mem = memory_init();
+    mcu->timers = init_timers();
+    mcu->intpt = init_intpt();
+
+	if (!mcu->cpu || !mcu->mem || !mcu->timers || !mcu->intpt) {
+        if (mcu->cpu){
+			free(mcu->cpu);
+		}
+		if (mcu->mem){
+			free(mcu->mem);
+		}
+		if (mcu->timers){
+			free(mcu->timers);
+		}
+		if (mcu->intpt){
+			free(mcu->intpt);
+		}
+		free(mcu);
+        return 1;
 	}
-	8051->mem = memory_init();
-	if (8051->mem == NULL){
-		free(8051->cpu);
-		free(8051);
-		return 1;
-	} 
-	8051->timers = init_timers();
-	if (8051->timers == NULL){
-		free(8051->cpu);
-		free(8051->mem);
-		free(8051);
-		return 1;
-	} 
-	&8051->mem->sfr.TL0 = (uint8_t *)&8051->timers->timer0;
-	&8051->mem->sfr.TH0 = ((uint8_t *)&8051->timers->timer0) + 1;
-	&8051->mem->sfr.TL1 = (uint8_t *)&8051->timers->timer1;
-	&8051->mem->sfr.TH1 = ((uint8_t *)&8051->timers->timer1) + 1;
-	8051->intpt = init_int();
-	if (8051->intpt == NULL){
-		free(8051->cpu);
-		free(8051->mem);
-		free(8051->timers);
-		free(8051);
-		return 1;
-	} 
 	
 }
