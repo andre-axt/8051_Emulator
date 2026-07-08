@@ -4,7 +4,7 @@
 #include <string.h>
 
 uint8_t fetch_byte(Mcu8051_t *mcu) {
-    uint8_t instruction = mcu->mem->internal_rom[mcu->cpu->PC][0]; 
+    uint8_t instruction = mcu->mem->internal_rom[mcu->cpu->PC]; 
     mcu->cpu->PC++;
     return instruction;
 }
@@ -16,7 +16,6 @@ Cpu_t* cpu_init() {
 	cpu->total_cycles = 0;
 	cpu->PC = 0x0000;
 	cpu->halted = 0;
-	cpu->SP = NULL;
 	return cpu;
 }
 
@@ -29,11 +28,11 @@ void cpu_step(Mcu8051_t *mcu) {
 	if (instr->execute == NULL) {
         	mcu->cpu->halted = 1;
         	return;
-    	}
+    }
 
-	instr->execute(cpu);
-	cpu->total_cycles += instr->cycles;
-	update_timers(timers, mem, cpu->total_cycles);
+	instr->execute(mcu->cpu);
+	mcu->cpu->total_cycles += instr->cycles;
+	update_timers(mcu, instr->cycles);
 }
 
 void cpu_run(Mcu8051_t *mcu, uint32_t steps) {
