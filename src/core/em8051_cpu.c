@@ -3,14 +3,9 @@
 #include "em8051_memory.h"
 #include "em8051_opcodes.h"
 #include "em8051_timers.h"
+#include "em8051_bitops.h"
 #include <stdlib.h>
 #include <string.h>
-
-uint8_t fetch_byte(Mcu8051_t *mcu) {
-    uint8_t instruction = mcu->mem->internal_rom[mcu->cpu->PC]; 
-    mcu->cpu->PC++;
-    return instruction;
-}
 
 Cpu_t* cpu_init() {
 	Cpu_t *cpu;
