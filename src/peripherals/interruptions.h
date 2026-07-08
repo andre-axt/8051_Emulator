@@ -35,6 +35,6 @@ typedef struct {
 Interruptions_t* init_intpt();
 int8_t check_intpt(Mcu8051_t *mcu); // returns 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial 
 int8_t get_priority_from_intpt(Mcu8051_t *mcu, int8_t handler);
-inline void lock_intpt(Mcu8051_t *mcu, int8_t handler); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
-inline void set_intpt(Mcu8051_t *mcu, int8_t handler); // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
+void lock_intpt(Mcu8051_t *mcu, int8_t handler); // handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial
+void set_intpt(Mcu8051_t *mcu, int8_t handler, uint8_t value); // set to 0, handler: 0 = nothing, 1 = INT0, 2 = Timer0, 3 = INT1, 4 = Timer1, 5 = Serial, 6 = EA
 #endif
