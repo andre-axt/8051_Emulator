@@ -1,5 +1,5 @@
-#ifndef OPCODES_H
-#define OPCODES_H
+#ifndef EM8051_OPCODES_H
+#define EM8051_OPCODES_H
 
 #include <stdint.h>
 

@@ -1,5 +1,8 @@
-#include "system.h"
-#include "opcodes.h"
+#include "em8051_types.h"
+#include "em8051_cpu.h"
+#include "em8051_memory.h"
+#include "em8051_opcodes.h"
+#include "em8051_timers.h"
 #include <stdlib.h>
 #include <string.h>
 

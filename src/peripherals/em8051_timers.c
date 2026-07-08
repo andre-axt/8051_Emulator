@@ -1,5 +1,6 @@
-#include "timer.h"
-#include "system.h"
+#include "em8051_timers.h"
+#include "em8051_types.h"
+#include "em8051_memory.h"
 #include <stdlib.h>
 #include <string.h>
 

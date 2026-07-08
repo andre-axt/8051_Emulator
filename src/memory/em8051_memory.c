@@ -1,4 +1,4 @@
-#include "memory.h"
+#include "em8051_memory.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>

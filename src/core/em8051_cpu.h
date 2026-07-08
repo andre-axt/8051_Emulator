@@ -1,11 +1,11 @@
-#ifndef CPU_H
-#define CPU_H
+#ifndef EM8051_CPU_H
+#define EM8051_CPU_H
 
 #include <stdint.h>
 
 typedef struct Mcu8051_t Mcu8051_t;
 
-typedef struct {
+typedef struct Cpu_t {
 	uint16_t PC;
 	uint64_t total_cycles;
 	uint8_t halted;	

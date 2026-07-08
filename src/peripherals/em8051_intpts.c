@@ -1,4 +1,7 @@
-#include "system.h"
+#include "em8051_types.h"
+#include "em8051_cpu.h"
+#include "em8051_intpts.h"
+#include "em8051_memory.h"
 #include <stdlib.h>
 
 Interruptions_t* init_intpt(){

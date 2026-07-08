@@ -1,5 +1,5 @@
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef EM8051_TIMERS_H
+#define EM8051_TIMERS_H
 
 #include <stdint.h>
 
@@ -30,7 +30,7 @@ typedef struct Mcu8051_t Mcu8051_t;
 #define TMOD_M0_1_MASK (1 << 1)
 #define TMOD_M0_0_MASK (1 << 0)
 
-typedef struct {
+typedef struct Timers_system_t {
 	//uint16_t timer0;
 	//uint16_t timer1; I really don't know what I'm going to do here, probably add a few variables for future debugging or something like that.
 		

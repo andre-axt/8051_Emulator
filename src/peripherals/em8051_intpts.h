@@ -1,5 +1,5 @@
-#ifndef INTERRUPTIONS_H
-#define INTERRUPTIONS_H
+#ifndef EM8051_INTPTS_H
+#define EM8051_INTPTS_H
 
 #include <stdint.h>
 
@@ -24,7 +24,7 @@ typedef struct Mcu8051_t Mcu8051_t;
 #define IP_PT1	 (1 << 3)
 #define IP_PS	 (1 << 4)
 
-typedef struct {
+typedef struct Interruptions_t {
   	int8_t Int0;
   	int8_t Timer0;
   	int8_t Int1;

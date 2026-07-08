@@ -1,5 +1,5 @@
-#ifndef MEMORY_H
-#define MEMORY_H
+#ifndef EM8051_MEMORY_H
+#define EM8051_MEMORY_H
 
 #include <stdint.h>
 
@@ -57,7 +57,7 @@ typedef struct {
 
 } Sfr_t;
 
-typedef struct {
+typedef struct Memory_t {
 	Internal_ram_t ram;
 	Sfr_t sfr;
 	uint8_t internal_rom[INTERNAL_ROM_SIZE];

@@ -1,4 +1,8 @@
-#include "system.h"
+#include "em8051_types.h"
+#include "em8051_cpu.h"
+#include "em8051_memory.h"
+#include "em8051_timers.h"
+#include "em8051_intpts.h"
 #include <stdlib.h>
 
 typedef struct Mcu8051_t Mcu8051_t;

@@ -1,5 +1,7 @@
-#include "opcodes.h"
-#include "system.h"
+#include "em8051_opcodes.h"
+#include "em8051_types.h"
+#include "em8051_memory.h"
+#include "em8051_cpu.h"
 #include <stdio.h>
 
 static uint8_t get_bit(Mcu8051_t *mcu, uint8_t bit_addr) {
