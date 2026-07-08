@@ -45,9 +45,9 @@ static uint8_t get_bit(Mcu8051_t *mcu, uint8_t bit_addr) {
 
 }
 
-static void set_bit(Mcu8051_t *mcu, uint8_t value) {
+static void set_bit(Mcu8051_t *mcu, uint8_t bit_addr, uint8_t value) {
 	uint8_t byte_offset = bit_addr >> 3;
-	uint8_t byte_addr = 0x20 +byte_offset;
+	uint8_t byte_addr = 0x20 + byte_offset;
 	uint8_t bit_pos = bit_addr & 0x07;
 	uint8_t byte = memory_read_data(mcu->mem, byte_addr);
 
