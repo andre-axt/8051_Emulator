@@ -9,8 +9,8 @@ Memory_t* memory_init(){
 
 	memset(mem, 0, sizeof(Memory_t));
 
-	memset(mem->ram, 0, sizeof(Internal_ram_t));
-	memset(mem->internal_rom, 0, INTERNAL_ROM_SIZE);
+	memset(&(mem->ram), 0, sizeof(Internal_ram_t));
+	memset(&(mem->internal_rom), 0, INTERNAL_ROM_SIZE);
 	mem->ram.current_bank = 0;
 
 	mem->sfr.SP = 0x07;
@@ -141,7 +141,7 @@ int memory_load_program (Memory_t *mem, const uint8_t *program, const uint16_t s
 	}
 
 	if (start_address + size < INTERNAL_ROM_SIZE) {
-		memcpy(mem->internal_rom[start_address], program, size);
+		memcpy(&(mem->internal_rom[start_address]), program, size);
 		return 0;
 	}
 
