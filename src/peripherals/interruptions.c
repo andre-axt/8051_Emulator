@@ -1,4 +1,4 @@
-#include "interruptions.h"
+#include "system.h"
 #include <stdlib.h>
 
 Interruptions_t* init_intpt(){
@@ -15,110 +15,63 @@ Interruptions_t* init_intpt(){
   
 }
 
-int8_t check_intpt(Interruptions_t *intpts) {
-  if(intpts == NULL) return -1;
+int8_t check_intpt(Mcu8051_t *mcu) {
+  if(mcu == NULL) return -1;
+
+  uint8_t ip = mcu->mem->sfr.IP; 
+  uint8_t ie = mcu->mem->sfr.IE;
+
+  if (!(ie & IE_EA)) return 0;
   
   for (int i = 0; i <= 4; i++) {
-    if(*intpts->IP & (1 << i)) {
+    if(ip & (1 << i)) {
       return i + 1;
     }
   } 
-  return 1;
+  return 0;
   
 }
 
-int8_t get_priority_from_intpt(uint8_t *IP, int8_t handler) {
-  if(handler == 0) return -1;
-  switch(handler) {
-    case 1: {
-      if(*IP & IP_PX0) {
-        return 1;
-      }	
-      return 0;
-    }
-    case 2: {
-      if(*IP & IP_PT0) {
-        return 1;
-      }	
-      return 0;
-    }
-    case 3: {
-      if(*IP & IP_PX1) {
-        return 1;
-      }	
-      return 0;
-    }
-    case 4: {
-      if(*IP & IP_PT1) {
-        return 1;
-      }	
-      return 0;
-    }
-    case 5: {
-      if(*IP & IP_PS) {
-        return 1;
-      }	
-      return 0;
-    }
-  }
+int8_t get_priority_from_intpt(Mcu8051_t *mcu, int8_t handler) {
+  if (handler == 0 || mcu == NULL) return -1;
+    
+  uint8_t ip = mcu->mem->sfr.IP;
 
+  switch(handler) {
+      case 1: return (ip & IP_PX0) ? 1 : 0;
+      case 2: return (ip & IP_PT0) ? 1 : 0;
+      case 3: return (ip & IP_PX1) ? 1 : 0;
+      case 4: return (ip & IP_PT1) ? 1 : 0;
+      case 5: return (ip & IP_PS)  ? 1 : 0;
+  }
   return -1;
 }
 
-inline void lock_intpt(uint16_t *pc, int8_t handler) {
-  if(handler == 0) return;
+void lock_intpt(Mcu8051_t *mcu, int8_t handler) {
+  if (handler == 0 || mcu == NULL) return;
+  
   switch(handler) {
-    case 1: {
-      *pc = INT0;
-      return;
-    }
-    case 2: {
-      *pc = TIMER0;
-      return;
-    }
-    case 3: {
-      *pc = INT1;
-      return;
-    }
-    case 4: {
-      *pc = TIMER1;
-      return;
-    }
-    case 5: {
-      *pc = SERIAL;
-      return;
-    }
+      case 1: mcu->cpu->PC = INT0;   return;
+      case 2: mcu->cpu->PC = TIMER0; return;
+      case 3: mcu->cpu->PC = INT1;   return;
+      case 4: mcu->cpu->PC = TIMER1; return;
+      case 5: mcu->cpu->PC = SERIAL; return;
   }
+
   return;
 }
 
-inline void set_intpt(Interruptions_t *interruptions, int8_t handler) {
+void set_intpt(Mcu8051_t *mcu, int8_t handler, uint8_t value) {
   if(handler == 0) return;
+  if(value != 1 && value != 0) return;
+  
   switch(handler) {
-    case 1: {
-      interruptions->Int0 = 0;
-      return;
+        case 1: mcu->intpt->Int0 = value;   return;
+        case 2: mcu->intpt->Timer0 = value; return;
+        case 3: mcu->intpt->Int1 = value;   return;
+        case 4: mcu->intpt->Timer1 = value; return;
+        case 5: mcu->intpt->Serial = value; return;
     }
-    case 2: {
-      interruptions->Timer0 = 0;
-      return;
-    }
-    case 3: {
-      interruptions->Int1 = 0;
-      return;
-    }
-    case 4: {
-      interruptions->Timer1 = 0;
-      return;
-    }
-    case 5: {
-      interruptions->Serial = 0;
-      return;
-    }
-    case 6: {
-      interruptions->IE = 0;
-      return;
-    }
-  }
+  
   return;
 }
