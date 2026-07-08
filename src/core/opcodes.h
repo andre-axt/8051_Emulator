@@ -1,6 +1,8 @@
 #ifndef OPCODES_H
 #define OPCODES_H
 
+#include <stdint.h>
+
 typedef struct Mcu8051_t Mcu8051_t;
 
 typedef struct {
