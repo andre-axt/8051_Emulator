@@ -37,7 +37,6 @@ Memory_t* memory_init(){
 	mem->sfr.P2 = 0xFF;
 	mem->sfr.P3 = 0xFF;
 
-	mem->timers = NULL;
 	mem->ram.current_bank = 0;
 
 	return mem;
