@@ -30,7 +30,7 @@ void cpu_step(Mcu8051_t *mcu) {
         	return;
     }
 
-	instr->execute(mcu->cpu);
+	instr->execute(mcu);
 	mcu->cpu->total_cycles += instr->cycles;
 	update_timers(mcu, instr->cycles);
 }
