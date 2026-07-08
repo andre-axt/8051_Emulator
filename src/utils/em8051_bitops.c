@@ -1,4 +1,4 @@
-#include "em8051_bitops"
+#include "em8051_bitops.h"
 #include "em8051_types.h"
 #include "em8051_cpu.h"
 #include "em8051_memory.h"
@@ -9,7 +9,7 @@ uint8_t fetch_byte(Mcu8051_t *mcu) {
     return instruction;
 }
 
-static uint8_t get_bit(Mcu8051_t *mcu, uint8_t bit_addr) {
+uint8_t get_bit(Mcu8051_t *mcu, uint8_t bit_addr) {
 	if (bit_addr < 0x80){
 		uint8_t byte_addr = 0x20 + (bit_addr >> 3);
 		uint8_t bit_pos = bit_addr & 0x07;
@@ -52,7 +52,7 @@ static uint8_t get_bit(Mcu8051_t *mcu, uint8_t bit_addr) {
 
 }
 
-static void set_bit(Mcu8051_t *mcu, uint8_t bit_addr, uint8_t value) {
+void set_bit(Mcu8051_t *mcu, uint8_t bit_addr, uint8_t value) {
 	uint8_t byte_offset = bit_addr >> 3;
 	uint8_t byte_addr = 0x20 + byte_offset;
 	uint8_t bit_pos = bit_addr & 0x07;

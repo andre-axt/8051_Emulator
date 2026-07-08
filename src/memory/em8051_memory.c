@@ -4,11 +4,11 @@
 #include <stdint.h>
 
 Memory_t* memory_init(){
-	Memory_t *mem;
+	Memory_t *mem = malloc(sizeof(Memory_t));
+
 	if (mem == NULL) return NULL;
 
 	memset(mem, 0, sizeof(Memory_t));
-
 	memset(&(mem->ram), 0, sizeof(Internal_ram_t));
 	memset(&(mem->internal_rom), 0, INTERNAL_ROM_SIZE);
 	mem->ram.current_bank = 0;
