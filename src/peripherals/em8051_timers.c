@@ -12,77 +12,101 @@ Timers_system_t* init_timers() {
 	return timers;
 }
 
-void update_timers(Mcu8051_t *mcu, uint32_t cycles) {
-	if (mcu == NULL) return;
-
+void update_timers(Mcu8051_t *mcu, uint8_t cycles) {
+	if (mcu->mem == NULL) return;
+	
 	uint8_t tmod = mcu->mem->sfr.TMOD;
 	uint8_t tcon = mcu->mem->sfr.TCON;
 
+	uint8_t *TL0 = mcu->mem->sfr.TL0;
+	uint8_t *TH0 = mcu->mem->sfr.TH0;
+	uint8_t *TL1 = mcu->mem->sfr.TL1;
+	uint8_t *TH1 = mcu->mem->sfr.TH1;
+
 	if (tcon & TCON_TR0_MASK) {
-		uint16_t t0 = ((uint16_t)mcu->mem->sfr.TH0 << 8) | mcu->mem->sfr.TL0;
 		uint8_t mode0 = tmod & 0x03; 
 		
-		t0 += cycles;
 		switch(mode0) {
 			case 0:
-				if (t0 >= 0x1FFF) {
-					t0 = 0;
-					mcu->mem->sfr.TCON |= TCON_TF0_MASK;
+				if (*TL0 == 0xFF) {
+					*TH0 >= cycles;
+					if (*TH0 == 0x1F) {
+						mcu->mem->sfr.TCON |= TCON_TF0_MASK;
+					}
+					break;
+					
 				}	
+				*TL0 += cycles;
 				break;
 
 			case 1:
-				if (t0 >= 0xFFFF) {
-					t0 = 0;
-					mcu->mem->sfr.TCON |= TCON_TF0_MASK;
-				}
+				if (*TL0 == 0xFF) {
+					*TH0 >= cycles;
+					if (*TH0 == 0xFF) {
+						mcu->mem->sfr.TCON |= TCON_TF0_MASK;
+					}
+					break;
+					
+				}	
+				*TL0 += cycles;
 				break;		
 				
 			case 2: 
-				if (t0 >= 0x00FF) {
-					t0 &= 0xFF00;
+				if (*TL0 == 0xFF) {
+					*TL0 = *TH0;
 					mcu->mem->sfr.TCON |= TCON_TF0_MASK;
-
-				}
-				break;
+					break;
+					
+				}	
+				*TL0 += cycles;
+				break;	
+			
+				
+				
 		}
-
-		mcu->mem->sfr.TH0 = (uint8_t)(t0 >> 8);
-		mcu->mem->sfr.TL0 = (uint8_t)(t0 & 0xFF);
 	
 	}
 
 	if (tcon & TCON_TR1_MASK) {
-		uint16_t t1 = ((uint16_t)mcu->mem->sfr.TH1 << 8) | mcu->mem->sfr.TL1;
 		uint8_t mode1 = (tmod >> 4) & 0x03;
-	
-		t1 += cycles;
+
 		switch(mode1) {
 			case 0:
-				if (t1 >= 0x1FFF) {
-					t1 = 0;
-					mcu->mem->sfr.TCON |= TCON_TF1_MASK;
-				}
+				if (*TL1 == 0xFF) {
+					*TH1 += cycles;
+					if (*TH1 >= 0x1F) {
+						mcu->mem->sfr.TCON |= TCON_TF1_MASK;
+					}
+					break;
+					
+				}	
+				*TL1 >= cycles;
 				break;
-
+			
 			case 1:
-				if (t1 >= 0xFFFF) {
-					t1 = 0;
-					mcu->mem->sfr.TCON |= TCON_TF1_MASK;
-				}
+				if (*TL1 == 0xFF) {
+					*TH1 += cycles;
+					if (*TH1 >= 0x1F) {
+						mcu->mem->sfr.TCON |= TCON_TF1_MASK;
+					}
+					break;
+					
+				}	
+				*TL1 >= cycles;
 				break;
 		
-			case 2: 
-				if (t1 >= 0x00FF) {
-					t1 &= 0xFF00;
-					mcu->mem->sfr.TCON |= TCON_TF1_MASK;
-				}
+			case 2:
+				if (*TL1 == 0xFF) {
+					*TL1 = *TH1;
+					mcu->mem->sfr.TCON |= TCON_TF0_MASK;
+					break;
+					
+				}	
+				*TL1 += cycles;
+				break;	
 
 
 		}
-
-		mcu->mem->sfr.TH1 = (uint8_t)(t1 >> 8);
-		mcu->mem->sfr.TL1 = (uint8_t)(t1 & 0xFF);
 
 	}
 
