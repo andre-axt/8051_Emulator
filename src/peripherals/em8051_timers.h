@@ -37,6 +37,6 @@ typedef struct Timers_system_t {
 } Timers_system_t;
 
 Timers_system_t* init_timers();
-void update_timers(Mcu8051_t *mcu, uint32_t cycles);
+void update_timers(Mcu8051_t *mcu, uint8_t cycles);
 
 #endif
