@@ -11,6 +11,7 @@ Instruction_t opcode_table[256] = {
 	[0xC2] = { "CLR bit", 1, 1, instr_clr },
 	[0xC3] = { "CLR C", 1, 1, instr_clr },
 	[0xE4] = { "CLR A", 1, 1, instr_clr },
+    [0xD0] = { "POP byte", 1, 1, instr_pop },
 
 }
 
@@ -52,5 +53,13 @@ void instr_clr(Mcu8051_t *mcu) {
 		}
 	}
 	mcu->cpu->PC++;
+	return;
+}
+
+void instr_pop(Mcu8051_t *mcu) {
+	if(mcu->cpu == NULL || mcu->mem == NULL) return;
+	mcu->cpu->PC++;
+	uint8_t byte = fetch_byte(mcu);
+    stack_pop_byte(mcu->mem);
 	return;
 }
