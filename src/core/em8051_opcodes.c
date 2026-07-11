@@ -35,6 +35,16 @@ Instruction_t opcode_table[256] = {
         mcu->cpu->PC++; \
     }
 
+DEFINE_INC_RN(0)
+DEFINE_INC_RN(1)
+DEFINE_INC_RN(2)
+DEFINE_INC_RN(3)
+DEFINE_INC_RN(4)
+DEFINE_INC_RN(5)
+DEFINE_INC_RN(6)
+DEFINE_INC_RN(7)
+
+#undef DEFINE_INC_RN
 
 void instr_inc_a(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
