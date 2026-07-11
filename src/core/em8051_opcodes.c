@@ -12,18 +12,39 @@ Instruction_t opcode_table[256] = {
 	[0xC3] = { "CLR C", 1, 1, instr_clr },
 	[0xE4] = { "CLR A", 1, 1, instr_clr },
     [0xD0] = { "POP byte", 1, 1, instr_pop },
+	[0x08] = { "INC R0", 1, 1, instr_inc_r0 },
+    [0x09] = { "INC R1", 1, 1, instr_inc_r1 },
+    [0x0A] = { "INC R2", 1, 1, instr_inc_r2 },
+    [0x0A] = { "INC R3", 1, 1, instr_inc_r3 },
+    [0x0A] = { "INC R4", 1, 1, instr_inc_r4 },
+    [0x0A] = { "INC R5", 1, 1, instr_inc_r5 },
+    [0x0A] = { "INC R6", 1, 1, instr_inc_r6 },
+    [0x0A] = { "INC R7", 1, 1, instr_inc_r7 },
 
 }
 
-void instr_nop(Mcu8051_t *mcu) {
-	if (mcu->cpu == NULL) return;
-	mcu->cpu->PC++;
-	return;
-}
+#define DEFINE_INC_RN(n) \
+    void instr_inc_r##n(Mcu8051_t *mcu) { \
+        if (mcu->cpu == NULL || mcu->mem == NULL) return; \
+        \
+        uint8_t rs0 = (mcu->mem->sfr.PSW >> 3) & 0x01; \
+        uint8_t rs1 = (mcu->mem->sfr.PSW >> 4) & 0x01; \
+        uint8_t bank = (rs1 << 1) | rs0; \
+       	mcu->mem->ram.banks[bank][n]++; \
+        \
+        mcu->cpu->PC++; \
+    }
+
 
 void instr_inc_a(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 	mcu->mem->sfr.ACC++;
+	mcu->cpu->PC++;
+	return;
+}
+
+void instr_nop(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL) return;
 	mcu->cpu->PC++;
 	return;
 }
