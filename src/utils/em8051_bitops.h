@@ -1,4 +1,4 @@
-#ifdef EM8051_BITOPS_H 
+#ifndef EM8051_BITOPS_H 
 #define EM8051_BITOPS_H
 
 #include <stdint.h>
