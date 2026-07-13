@@ -11,7 +11,6 @@ Memory_t* memory_init(){
 	memset(mem, 0, sizeof(Memory_t));
 	memset(&(mem->ram), 0, sizeof(Internal_ram_t));
 	memset(&(mem->internal_rom), 0, INTERNAL_ROM_SIZE);
-	mem->ram.current_bank = 0;
 
 	mem->sfr.SP = 0x07;
 	mem->sfr.PSW = 0x00;
@@ -36,8 +35,6 @@ Memory_t* memory_init(){
 	mem->sfr.P1 = 0xFF;
 	mem->sfr.P2 = 0xFF;
 	mem->sfr.P3 = 0xFF;
-
-	mem->ram.current_bank = 0;
 
 	return mem;
 }
