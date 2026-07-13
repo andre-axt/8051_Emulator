@@ -58,7 +58,8 @@ typedef struct {
 		uint8_t bytes[INTERNAL_RAM_SIZE];
 	
 	};
-	uint8_t current_bank;
+	uint8_t *current_bank;
+	uint8_t debug_mode;
 
 }Internal_ram_t;
 
