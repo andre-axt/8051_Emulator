@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 
 Memory_t* memory_init(){
 	Memory_t *mem = malloc(sizeof(Memory_t));
@@ -80,10 +81,14 @@ static uint8_t memory_read_sfr(Memory_t *mem, uint8_t address) {
 
 uint8_t memory_read_data (Memory_t *mem, uint8_t address) {
 	if (address < 0x80) {
-		return mem->ram.bytes[address];
+		uint8_t value = mem->ram.bytes[address];
+		if(mem->debug_mode) printf("memory_read_data returned - %d", value);
+		return value;
 	}	
 	else {
-		return memory_read_sfr(mem, address);
+		uint8_t value = memory_read_sfr(mem, address);
+		if(mem->debug_mode) printf("memory_read_data returned - %d", value);
+		return value;
 	}
 
 }
