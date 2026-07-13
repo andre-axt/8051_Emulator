@@ -24,6 +24,9 @@ void update_timers(Mcu8051_t *mcu, uint8_t cycles) {
 	uint8_t *TH1 = &mcu->mem->sfr.TH1;
 	uint8_t *TCON_REG = &mcu->mem->sfr.TCON;
 
+	uint8_t mode0 = ((muc->mem->sfr.TMOD & TMOD_M1_0_MASK) << 1) | muc->mem->sfr.TMOD & TMOD_M0_0_MASK;
+	uint8_t mode1 = ((muc->mem->sfr.TMOD & TMOD_M1_1_MASK) << 1) | muc->mem->sfr.TMOD & TMOD_M1_0_MASK;
+
 	if (mode0 != 3) {
         if (tcon & TCON_TR0_MASK) {
             if (mode0 == 0) {
