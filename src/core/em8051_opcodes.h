@@ -40,7 +40,4 @@ void instr_pop(Mcu8051_t *mcu);
 void instr_ret(Mcu8051_t *mcu);
 void instr_reti(Mcu8051_t *mcu);
 
-extern uint8_t fetch_byte(Mcu8051_t *mcu);
-extern uint16_t fetch_word(Mcu8051_t *mcu);
-
 #endif
