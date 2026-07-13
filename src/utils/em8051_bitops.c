@@ -9,6 +9,15 @@ uint8_t fetch_byte(Mcu8051_t *mcu) {
     return instruction;
 }
 
+uint16_t fetch_word(Mcu8051_t *mcu) {
+    uint8_t byte1 = mcu->mem->internal_rom[mcu->cpu->PC];
+    mcu->cpu->PC++;
+	uint8_t byte2 = mcu->mem->internal_rom[mcu->cpu->PC];
+    mcu->cpu->PC++;
+	uint16_t word = (uint16_t)(byte1 << 8) | byte2;
+    return word;
+}
+
 uint8_t get_bit(Mcu8051_t *mcu, uint8_t bit_addr) {
 	if (bit_addr < 0x80){
 		uint8_t byte_addr = 0x20 + (bit_addr >> 3);
