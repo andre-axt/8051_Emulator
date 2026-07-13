@@ -31,7 +31,7 @@ clean:
 	rm -rf $(OBJ_DIR) $(TARGET)
 
 run: all
-	./$(TARGET)
+	./$(TARGET) $(ROM)
 
 -include $(DEPS)
 
