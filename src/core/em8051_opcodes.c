@@ -5,25 +5,6 @@
 #include "em8051_bitops.h"
 #include <stdlib.h>
 
-Instruction_t opcode_table[256] = {
-	[0x00] = { "NOP",   1, 1, instr_nop },
-    [0x04] = { "INC A", 1, 1, instr_inc_a },
-	[0x08] = { "INC R0", 1, 1, instr_inc_r0 },
-    [0x09] = { "INC R1", 1, 1, instr_inc_r1 },
-    [0x0A] = { "INC R2", 1, 1, instr_inc_r2 },
-    [0x0B] = { "INC R3", 1, 1, instr_inc_r3 },
-    [0x0C] = { "INC R4", 1, 1, instr_inc_r4 },
-    [0x0D] = { "INC R5", 1, 1, instr_inc_r5 },
-    [0x0E] = { "INC R6", 1, 1, instr_inc_r6 },
-    [0x0F] = { "INC R7", 1, 1, instr_inc_r7 },
-    [0xC0] = { "PUSH byte", 2, 2, instr_push },
-	[0xC2] = { "CLR bit", 1, 1, instr_clr },
-	[0xC3] = { "CLR C", 1, 1, instr_clr },
-    [0xD0] = { "POP byte", 2, 2, instr_pop },
-	[0xE4] = { "CLR A", 1, 1, instr_clr },
-
-};
-
 #define DEFINE_INC_RN(n) \
     void instr_inc_r##n(Mcu8051_t *mcu) { \
         if (mcu->cpu == NULL || mcu->mem == NULL) return; \
@@ -46,6 +27,26 @@ DEFINE_INC_RN(6)
 DEFINE_INC_RN(7)
 
 #undef DEFINE_INC_RN
+
+Instruction_t opcode_table[256] = {
+	[0x00] = { "NOP",   1, 1, instr_nop },
+    [0x04] = { "INC A", 1, 1, instr_inc_a },
+	[0x08] = { "INC R0", 1, 1, instr_inc_r0 },
+    [0x09] = { "INC R1", 1, 1, instr_inc_r1 },
+    [0x0A] = { "INC R2", 1, 1, instr_inc_r2 },
+    [0x0B] = { "INC R3", 1, 1, instr_inc_r3 },
+    [0x0C] = { "INC R4", 1, 1, instr_inc_r4 },
+    [0x0D] = { "INC R5", 1, 1, instr_inc_r5 },
+    [0x0E] = { "INC R6", 1, 1, instr_inc_r6 },
+    [0x0F] = { "INC R7", 1, 1, instr_inc_r7 },
+    [0xC0] = { "PUSH byte", 2, 2, instr_push },
+	[0xC2] = { "CLR bit", 1, 1, instr_clr },
+	[0xC3] = { "CLR C", 1, 1, instr_clr },
+    [0xD0] = { "POP byte", 2, 2, instr_pop },
+	[0xE4] = { "CLR A", 1, 1, instr_clr },
+
+};
+
 
 void instr_inc_a(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
@@ -101,7 +102,9 @@ void instr_pop(Mcu8051_t *mcu) {
 void instr_push(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
 	mcu->cpu->PC++;
-    stack_push_byte(mcu->mem);
+	uint8_t address = fetch_byte(mcu);
+	uint8_t value = memory_read_data(mcu->mem, address);
+    stack_push_byte(mcu->mem, value);
 	mcu->cpu->PC++;
 	return;
 }
