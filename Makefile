@@ -3,6 +3,12 @@ TARGET = program
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -std=c11 -MMD -MP
 
+DEBUG_MODE ?= MEMORY
+
+ifeq ($(DEBUG_MODE), MEMORY)
+    CFLAGS += -DDEBUG_MEMORY
+endif
+
 SRC_DIR = src
 OBJ_DIR = obj
 
