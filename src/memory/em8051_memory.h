@@ -59,7 +59,6 @@ typedef struct {
 	
 	};
 	uint8_t *current_bank;
-	uint8_t debug_mode;
 
 }Internal_ram_t;
 
@@ -99,6 +98,7 @@ typedef struct Memory_t {
 	Internal_ram_t ram;
 	Sfr_t sfr;
 	uint8_t internal_rom[INTERNAL_ROM_SIZE];
+	uint8_t debug_mode;
 
 } Memory_t;
 
