@@ -13,6 +13,12 @@ Memory_t* memory_init(){
 	memset(&(mem->ram), 0, sizeof(Internal_ram_t));
 	memset(&(mem->internal_rom), 0, INTERNAL_ROM_SIZE);
 
+	#ifdef DEBUG_MEMORY
+		mem->debug_mode = 1;
+	#else
+		mem->debug_mode = 0;
+	#endif
+
 	mem->sfr.SP = 0x07;
 	mem->sfr.PSW = 0x00;
 	mem->sfr.IE = 0x00;
