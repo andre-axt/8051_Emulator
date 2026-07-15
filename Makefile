@@ -16,6 +16,14 @@ SRCS = $(shell find $(SRC_DIR) -name "*.c")
 
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
+DEBUG_TRACKER = .debug_mode_state
+PREV_DEBUG_MODE := $(shell cat $(DEBUG_TRACKER) 2>/dev/null)
+
+ifneq ($(DEBUG_MODE), $(PREV_DEBUG_MODE))
+    $(shell echo "$(DEBUG_MODE)" > $(DEBUG_TRACKER))
+    $(shell rm -f $(TARGET) $(OBJS))
+endif
+
 DEPS = $(OBJS:.o=.d)
 
 INCLUDES = $(addprefix -I, $(shell find $(SRC_DIR) -type d))
@@ -34,10 +42,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@echo "Cleaning up build files..."
-	rm -rf $(OBJ_DIR) $(TARGET)
+	rm -rf $(OBJ_DIR) $(TARGET) $(DEBUG_TRACKER)
 
 run: all
-	./$(TARGET) $(ROM)
+	./$(TARGET) $(ROM) $(DEBUG_MODE)
 
 -include $(DEPS)
 
