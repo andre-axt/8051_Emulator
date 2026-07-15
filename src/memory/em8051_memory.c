@@ -147,7 +147,7 @@ int memory_load_program (Memory_t *mem, const uint8_t *program, const uint16_t s
 	
 	}
 
-	if (start_address + size < INTERNAL_ROM_SIZE) {
+	if (start_address + size <= INTERNAL_ROM_SIZE) {
 		memcpy(&(mem->internal_rom[start_address]), program, size);
 		return 0;
 	}

@@ -55,8 +55,8 @@ int main(int argc, char *argv[]){
 
 	FILE *rom_file = fopen(argv[1], "r");
     if (rom_file == NULL) {
-        perror("Error opening ROM file");
-        free_mcu(mcu);
+        fprintf(stderr, "Error opening ROM file at path: '%s'\n", argv[1]);
+	free_mcu(mcu);
         return 1;
     }
 
