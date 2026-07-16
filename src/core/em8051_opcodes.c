@@ -31,6 +31,7 @@ DEFINE_INC_RN(7)
 Instruction_t opcode_table[256] = {
 	[0x00] = { "NOP",   1, 1, instr_nop },
     [0x04] = { "INC A", 1, 1, instr_inc_a },
+    [0x05] = { "INC direct", 2, 2, instr_inc_direct },
 	[0x08] = { "INC R0", 1, 1, instr_inc_r0 },
     [0x09] = { "INC R1", 1, 1, instr_inc_r1 },
     [0x0A] = { "INC R2", 1, 1, instr_inc_r2 },
@@ -51,6 +52,16 @@ Instruction_t opcode_table[256] = {
 void instr_inc_a(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 	mcu->mem->sfr.ACC++;
+	mcu->cpu->PC++;
+	return;
+}
+
+void instr_inc_direct(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL || mcu->mem == NULL) return;
+	mcu->cpu->PC++;
+	uint8_t address = fetch_byte(mcu);
+    uint8_t value = 1;
+	memory_write_data(mcu->mem, address, value);
 	mcu->cpu->PC++;
 	return;
 }
