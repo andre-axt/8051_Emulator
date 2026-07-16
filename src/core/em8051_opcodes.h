@@ -34,6 +34,7 @@ void instr_anl_a_immed(Mcu8051_t *mcu);
 void instr_orl_a_immed(Mcu8051_t *mcu);
 void instr_xrl_a_immed(Mcu8051_t *mcu);
 void instr_inc_a(Mcu8051_t *mcu);
+void instr_inc_direct(Mcu8051_t *mcu);
 void instr_dec_a(Mcu8051_t *mcu);
 void instr_push(Mcu8051_t *mcu);
 void instr_pop(Mcu8051_t *mcu);
