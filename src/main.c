@@ -111,6 +111,11 @@ int main(int argc, char *argv[]){
 
     free(rom_buffer);
 
+	while (!mcu->cpu->halted) {
+		getchar();
+		cpu_step(mcu);
+	}
+
 	free_mcu(mcu);
 	
 }
