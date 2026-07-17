@@ -14,7 +14,6 @@
         uint8_t bank = (rs1 << 1) | rs0; \
        	mcu->mem->ram.banks[bank][n]++; \
         \
-        mcu->cpu->PC++; \
     }
 
 DEFINE_INC_RN(0)
@@ -30,7 +29,7 @@ DEFINE_INC_RN(7)
 
 Instruction_t opcode_table[256] = {
 	[0x00] = { "NOP",   1, 1, instr_nop },
-    [0x04] = { "INC A", 1, 1, instr_inc_a },
+    [0x04] = { "INC A", 1, 1, instr_inc_acc },
     [0x05] = { "INC direct", 2, 2, instr_inc_direct },
 	[0x08] = { "INC R0", 1, 1, instr_inc_r0 },
     [0x09] = { "INC R1", 1, 1, instr_inc_r1 },
@@ -44,15 +43,14 @@ Instruction_t opcode_table[256] = {
 	[0xC2] = { "CLR bit", 1, 1, instr_clr_bit },
 	[0xC3] = { "CLR C", 1, 1, instr_clr_c },
     [0xD0] = { "POP byte", 2, 2, instr_pop },
-	[0xE4] = { "CLR A", 1, 1, instr_clr_a },
+	[0xE4] = { "CLR A", 1, 1, instr_clr_acc },
 
 };
 
 
-void instr_inc_a(Mcu8051_t *mcu) {
+void instr_inc_acc(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 	mcu->mem->sfr.ACC++;
-	mcu->cpu->PC++;
 	return;
 }
 
@@ -62,13 +60,11 @@ void instr_inc_direct(Mcu8051_t *mcu) {
 	uint8_t address = fetch_byte(mcu);
     uint8_t value = 1;
 	memory_write_data(mcu->mem, address, value);
-	mcu->cpu->PC++;
 	return;
 }
 
 void instr_nop(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL) return;
-	mcu->cpu->PC++;
 	return;
 }
 
@@ -79,19 +75,16 @@ void instr_clr_bit(Mcu8051_t *mcu) {
 	mcu->cpu->PC++;
 	uint8_t bit = fetch_byte(mcu);
 	set_bit(mcu, bit, 0);
-	mcu->cpu->PC++;
 	return;
 }
 
 void instr_clr_c(Mcu8051_t *mcu) {
 	mcu->mem->sfr.PSW &= (uint8_t)~(1u << 3);  
-	mcu->cpu->PC++;
 	return;
 }
 
-void instr_clr_a(Mcu8051_t *mcu) {
+void instr_clr_acc(Mcu8051_t *mcu) {
 	mcu->mem->sfr.ACC = 0;
-	mcu->cpu->PC++;
 	return;
 }
 
@@ -101,7 +94,6 @@ void instr_pop(Mcu8051_t *mcu) {
 	uint8_t address = fetch_byte(mcu);
     uint8_t value = stack_pop_byte(mcu->mem);
 	memory_write_data(mcu->mem, address, value);
-	mcu->cpu->PC++;
 	return;
 }
 
@@ -111,6 +103,5 @@ void instr_push(Mcu8051_t *mcu) {
 	uint8_t address = fetch_byte(mcu);
 	uint8_t value = memory_read_data(mcu->mem, address);
     stack_push_byte(mcu->mem, value);
-	mcu->cpu->PC++;
 	return;
 }
