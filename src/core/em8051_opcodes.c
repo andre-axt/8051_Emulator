@@ -41,10 +41,10 @@ Instruction_t opcode_table[256] = {
     [0x0E] = { "INC R6", 1, 1, instr_inc_r6 },
     [0x0F] = { "INC R7", 1, 1, instr_inc_r7 },
     [0xC0] = { "PUSH byte", 2, 2, instr_push },
-	[0xC2] = { "CLR bit", 1, 1, instr_clr },
-	[0xC3] = { "CLR C", 1, 1, instr_clr },
+	[0xC2] = { "CLR bit", 1, 1, instr_clr_bit },
+	[0xC3] = { "CLR C", 1, 1, instr_clr_c },
     [0xD0] = { "POP byte", 2, 2, instr_pop },
-	[0xE4] = { "CLR A", 1, 1, instr_clr },
+	[0xE4] = { "CLR A", 1, 1, instr_clr_a },
 
 };
 
@@ -72,30 +72,25 @@ void instr_nop(Mcu8051_t *mcu) {
 	return;
 }
 
-void instr_clr(Mcu8051_t *mcu) {
+void instr_clr_bit(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
-	
+
 	uint8_t opcode = fetch_byte(mcu);
-	
-	switch (opcode) {
-		case 0xC2 : {
-			mcu->cpu->PC++;
-			uint8_t bit = fetch_byte(mcu);
-			set_bit(mcu, bit, 0);
-			break;
-		}
-		case 0xC3 : {
-			mcu->mem->sfr.PSW &= (uint8_t)~(1u << 3);  
-			break;
-		}
-		case 0xE4 : {
-			mcu->mem->sfr.ACC = 0;  
-			break;
-		}
-		default: {
-			break;
-		}
-	}
+	mcu->cpu->PC++;
+	uint8_t bit = fetch_byte(mcu);
+	set_bit(mcu, bit, 0);
+	mcu->cpu->PC++;
+	return;
+}
+
+void instr_clr_c(Mcu8051_t *mcu) {
+	mcu->mem->sfr.PSW &= (uint8_t)~(1u << 3);  
+	mcu->cpu->PC++;
+	return;
+}
+
+void instr_clr_a(Mcu8051_t *mcu) {
+	mcu->mem->sfr.ACC = 0;
 	mcu->cpu->PC++;
 	return;
 }
