@@ -9,6 +9,7 @@ typedef struct Cpu_t {
 	uint16_t PC;
 	uint64_t total_cycles;
 	uint8_t halted;	
+	uint16_t PC_arg;
 
 } Cpu_t;
 
