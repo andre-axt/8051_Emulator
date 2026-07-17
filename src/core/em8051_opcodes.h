@@ -42,5 +42,6 @@ void instr_push(Mcu8051_t *mcu);
 void instr_pop(Mcu8051_t *mcu);
 void instr_ret(Mcu8051_t *mcu);
 void instr_reti(Mcu8051_t *mcu);
+void instr_inc_rn(Mcu8051_t *mcu);
 
 #endif
