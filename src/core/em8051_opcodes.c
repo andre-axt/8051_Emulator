@@ -5,28 +5,6 @@
 #include "em8051_bitops.h"
 #include <stdlib.h>
 
-#define DEFINE_INC_RN(n) \
-    void instr_inc_r##n(Mcu8051_t *mcu) { \
-        if (mcu->cpu == NULL || mcu->mem == NULL) return; \
-        \
-        uint8_t rs0 = (mcu->mem->sfr.PSW >> 3) & 0x01; \
-        uint8_t rs1 = (mcu->mem->sfr.PSW >> 4) & 0x01; \
-        uint8_t bank = (rs1 << 1) | rs0; \
-       	mcu->mem->ram.banks[bank][n]++; \
-        \
-    }
-
-DEFINE_INC_RN(0)
-DEFINE_INC_RN(1)
-DEFINE_INC_RN(2)
-DEFINE_INC_RN(3)
-DEFINE_INC_RN(4)
-DEFINE_INC_RN(5)
-DEFINE_INC_RN(6)
-DEFINE_INC_RN(7)
-
-#undef DEFINE_INC_RN
-
 Instruction_t opcode_table[256] = {
 	[0x00] = { "NOP",   1, 1, instr_nop },
     [0x04] = { "INC A", 1, 1, instr_inc_acc },
@@ -47,6 +25,10 @@ Instruction_t opcode_table[256] = {
 
 };
 
+void instr_nop(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL) return;
+	return;
+}
 
 void instr_inc_acc(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
@@ -63,9 +45,17 @@ void instr_inc_direct(Mcu8051_t *mcu) {
 	return;
 }
 
-void instr_nop(Mcu8051_t *mcu) {
-	if (mcu->cpu == NULL) return;
-	return;
+void instr_inc_rn(Mcu8051_t *mcu) {
+    if (mcu->cpu == NULL || mcu->mem == NULL) return; 
+	
+	uint8_t Rn = fetch_byte(mcu);
+    Rn--; 
+    
+    uint8_t rs0 = (mcu->mem->sfr.PSW >> 3) & 0x01; 
+    uint8_t rs1 = (mcu->mem->sfr.PSW >> 4) & 0x01; 
+    uint8_t bank = (rs1 << 1) | rs0; 
+    
+    mcu->mem->ram.banks[bank][Rn]++; 
 }
 
 void instr_clr_bit(Mcu8051_t *mcu) {
