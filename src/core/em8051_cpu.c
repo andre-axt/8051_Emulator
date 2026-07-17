@@ -31,11 +31,22 @@ void cpu_step(Mcu8051_t *mcu) {
 	instr->execute(mcu);
 	mcu->cpu->total_cycles += instr->cycles;
 	update_timers(mcu, instr->cycles);
+
+	if(mcu->cpu->PC_arg != 1) {
+		mcu->cpu->PC = mcu->cpu->PC_arg;
+		mcu->cpu->PC_arg = 1;
+	} else {
+		mcu->cpu->PC++;
+	}
+
+	return;
 }
 
 void cpu_run(Mcu8051_t *mcu, uint32_t steps) {
 	for (uint32_t i = 0; i < steps && !mcu->cpu->halted; i++) {
 		cpu_step(mcu);
 	}
+
+	return;
 
 }
