@@ -32,6 +32,7 @@ void instr_cpl(Mcu8051_t *mcu);
 void instr_jnb(Mcu8051_t *mcu);
 void instr_jb(Mcu8051_t *mcu);
 void instr_jbc(Mcu8051_t *mcu);
+void instr_jmp(Mcu8051_t *mcu);
 void instr_anl_acc_immed(Mcu8051_t *mcu);
 void instr_orl_acc_immed(Mcu8051_t *mcu);
 void instr_xrl_acc_immed(Mcu8051_t *mcu);
