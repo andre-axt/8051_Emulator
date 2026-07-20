@@ -6,7 +6,8 @@
 #include <stdlib.h>
 
 Instruction_t opcode_table[256] = {
-	[0x00] = { "NOP",   1, 1, instr_nop },
+	[0x00] = { "NOP", 1, 1, instr_nop },
+	[0x01] = { "AJMP Label", 2, 2, instr_ajmp },
     [0x04] = { "INC A", 1, 1, instr_inc_acc },
     [0x05] = { "INC direct", 2, 2, instr_inc_direct },
 	[0x08] = { "INC R0", 1, 1, instr_inc_rn },
@@ -28,6 +29,14 @@ Instruction_t opcode_table[256] = {
 
 void instr_nop(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL) return;
+	return;
+}
+
+void instr_ajmp(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint8_t jump = fetch_byte(mcu);
+	mcu->cpu->PC_arg = jump;
+	mcu->cpu->is_jump = 1;
 	return;
 }
 
