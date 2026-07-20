@@ -95,6 +95,7 @@ void instr_jmp(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
 	uint16_t dptr = (mcu->mem->sfr.DPH << 8) | mcu->mem->sfr.DPL;
 	uint16_t jmp = (uint16_t)(mcu->mem->sfr.ACC + dptr);
+	mcu->cpu->is_jump = 1;
 	mcu->cpu->PC_arg = jmp;
 }
 
