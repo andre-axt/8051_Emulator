@@ -14,7 +14,8 @@ Cpu_t* cpu_init() {
 	if(cpu == NULL) return NULL;
 	cpu->total_cycles = 0;
 	cpu->PC = 0x0000;
-	cpu->PC_arg = -1;
+	cpu->PC_arg = 0;
+	cpu->is_jump = 0;
 	cpu->halted = 0;
 	#ifdef DEBUG_CPU
 		cpu->debug_mode = 1;
@@ -27,9 +28,9 @@ Cpu_t* cpu_init() {
 void cpu_step(Mcu8051_t *mcu) {
 	if (mcu->cpu->halted) return;
 
-	if(mcu->cpu->PC_arg != 0) {
+	if(mcu->cpu->is_jump) {
 		mcu->cpu->PC = mcu->cpu->PC_arg - 1;
-		mcu->cpu->PC_arg = 0;
+		mcu->cpu->is_jump = 0;
 	}
 	
 	uint8_t opcode = fetch_byte(mcu);
