@@ -7,6 +7,8 @@ DEBUG_MODE ?= MEMORY
 
 ifeq ($(DEBUG_MODE), MEMORY)
     CFLAGS += -DDEBUG_MEMORY
+else ifeq ($(DEBUG_MODE), CPU)
+    CFLAGS += -DDEBUG_CPU
 endif
 
 SRC_DIR = src
