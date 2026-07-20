@@ -17,6 +17,7 @@ Instruction_t opcode_table[256] = {
     [0x0D] = { "INC R5", 1, 1, instr_inc_rn },
     [0x0E] = { "INC R6", 1, 1, instr_inc_rn },
     [0x0F] = { "INC R7", 1, 1, instr_inc_rn },
+	[0x73] = { "JMP @A+DPTR", 1, 1, instr_jmp },
     [0xC0] = { "PUSH byte", 2, 2, instr_push },
 	[0xC2] = { "CLR bit", 1, 1, instr_clr_bit },
 	[0xC3] = { "CLR C", 1, 1, instr_clr_c },
@@ -95,3 +96,11 @@ void instr_push(Mcu8051_t *mcu) {
     stack_push_byte(mcu->mem, value);
 	return;
 }
+
+void instr_jmp(Mcu8051_t *mcu) {
+	if(mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint16_t dptr = (mcu->mem->sfr.DPH << 8) | mcu->mem->sfr.DPL;
+	uint16_t jmp = (uint16_t)(mcu->mem->sfr.ACC + dptr);
+	mcu->cpu.PC_arg = jmp;
+}
+
