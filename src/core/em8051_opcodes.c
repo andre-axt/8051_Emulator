@@ -62,7 +62,6 @@ void instr_inc_rn(Mcu8051_t *mcu) {
 void instr_clr_bit(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 
-	uint8_t opcode = fetch_byte(mcu);
 	mcu->cpu->PC++;
 	uint8_t bit = fetch_byte(mcu);
 	set_bit(mcu, bit, 0);
@@ -101,6 +100,6 @@ void instr_jmp(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
 	uint16_t dptr = (mcu->mem->sfr.DPH << 8) | mcu->mem->sfr.DPL;
 	uint16_t jmp = (uint16_t)(mcu->mem->sfr.ACC + dptr);
-	mcu->cpu.PC_arg = jmp;
+	mcu->cpu->PC_arg = jmp;
 }
 
