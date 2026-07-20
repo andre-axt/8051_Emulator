@@ -5,6 +5,7 @@
 #include "em8051_timers.h"
 #include "em8051_bitops.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 Cpu_t* cpu_init() {
@@ -14,6 +15,11 @@ Cpu_t* cpu_init() {
 	cpu->total_cycles = 0;
 	cpu->PC = 0x0000;
 	cpu->halted = 0;
+	#ifdef DEBUG_CPU
+		cpu->debug_mode = 1;
+	#else
+		cpu->debug_mode = 0;
+	#endif
 	return cpu;
 }
 
@@ -22,6 +28,11 @@ void cpu_step(Mcu8051_t *mcu) {
 
 	uint8_t opcode = fetch_byte(mcu);
 	Instruction_t *instr = &opcode_table[opcode];
+
+	if (mcu->cpu->debug_mode) {
+		printf("PC: %d\n", mcu->cpu->PC);
+		printf("Opcode: %x\n", opcode);
+	} 
 	
 	if (instr->execute == NULL) {
         	mcu->cpu->halted = 1;
