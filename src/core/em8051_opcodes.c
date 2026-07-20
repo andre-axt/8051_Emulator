@@ -8,7 +8,8 @@
 Instruction_t opcode_table[256] = {
 	[0x00] = { "NOP", 1, 1, instr_nop },
 	[0x01] = { "AJMP Label", 2, 2, instr_ajmp },
-	[0x01] = { "LJMP Label", 3, 2, instr_ljmp },
+	[0x02] = { "LJMP Label", 3, 2, instr_ljmp },
+	[0x03] = { "RR A", 1, 1, instr_rr },
     [0x04] = { "INC A", 1, 1, instr_inc_acc },
     [0x05] = { "INC direct", 2, 2, instr_inc_direct },
 	[0x08] = { "INC R0", 1, 1, instr_inc_rn },
@@ -49,6 +50,11 @@ void instr_ljmp(Mcu8051_t *mcu) {
 	return;
 }
 
+void instr_rr(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL || mcu->mem == NULL) return;
+	mcu->mem->sfr.ACC >>= 1;
+	return;
+}
 
 void instr_inc_acc(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
