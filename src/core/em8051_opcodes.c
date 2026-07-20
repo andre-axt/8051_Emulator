@@ -39,7 +39,6 @@ void instr_inc_acc(Mcu8051_t *mcu) {
 
 void instr_inc_direct(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
-	mcu->cpu->PC++;
 	uint8_t address = fetch_byte(mcu);
     uint8_t value = 1;
 	memory_write_data(mcu->mem, address, value);
@@ -61,8 +60,6 @@ void instr_inc_rn(Mcu8051_t *mcu) {
 
 void instr_clr_bit(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
-
-	mcu->cpu->PC++;
 	uint8_t bit = fetch_byte(mcu);
 	set_bit(mcu, bit, 0);
 	return;
@@ -80,7 +77,6 @@ void instr_clr_acc(Mcu8051_t *mcu) {
 
 void instr_pop(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
-	mcu->cpu->PC++;
 	uint8_t address = fetch_byte(mcu);
     uint8_t value = stack_pop_byte(mcu->mem);
 	memory_write_data(mcu->mem, address, value);
@@ -89,7 +85,6 @@ void instr_pop(Mcu8051_t *mcu) {
 
 void instr_push(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
-	mcu->cpu->PC++;
 	uint8_t address = fetch_byte(mcu);
 	uint8_t value = memory_read_data(mcu->mem, address);
     stack_push_byte(mcu->mem, value);
