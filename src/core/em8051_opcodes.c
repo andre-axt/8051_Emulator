@@ -20,6 +20,7 @@ Instruction_t opcode_table[256] = {
     [0x0D] = { "INC R5", 1, 1, instr_inc_rn },
     [0x0E] = { "INC R6", 1, 1, instr_inc_rn },
     [0x0F] = { "INC R7", 1, 1, instr_inc_rn },
+    [0x0F] = { "JBC bit_adress, address", 3, 2, instr_jbc },
 	[0x73] = { "JMP @A+DPTR", 1, 1, instr_jmp },
     [0xC0] = { "PUSH byte", 2, 2, instr_push },
 	[0xC2] = { "CLR bit", 1, 1, instr_clr_bit },
@@ -81,6 +82,7 @@ void instr_inc_rn(Mcu8051_t *mcu) {
     uint8_t bank = (rs1 << 1) | rs0; 
     
     mcu->mem->ram.banks[bank][Rn]++; 
+	return;
 }
 
 void instr_clr_bit(Mcu8051_t *mcu) {
@@ -122,5 +124,18 @@ void instr_jmp(Mcu8051_t *mcu) {
 	uint16_t jmp = (uint16_t)(mcu->mem->sfr.ACC + dptr);
 	mcu->cpu->is_jump = 1;
 	mcu->cpu->PC_arg = jmp;
+	return;
 }
 
+
+void instr_jbc(Mcu8051_t *mcu) {
+	if(mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint8_t bit_address = fetch_byte(mcu);
+	uint8_t bit = get_bit(mcu, bit_adress);
+	uint8_t jmp = fetch_byte(mcu);
+	if (bit) { 
+		mcu->cpu->is_jump = 1;
+		mcu->cpu->PC_arg = jmp;
+	}
+	return;
+}
