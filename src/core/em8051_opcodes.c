@@ -7,8 +7,8 @@
 
 Instruction_t opcode_table[256] = {
 	[0x00] = { "NOP", 1, 1, instr_nop },
-	[0x01] = { "AJMP Label", 2, 2, instr_ajmp },
-	[0x02] = { "LJMP Label", 3, 2, instr_ljmp },
+	[0x01] = { "AJMP label", 2, 2, instr_ajmp },
+	[0x02] = { "LJMP label", 3, 2, instr_ljmp },
 	[0x03] = { "RR A", 1, 1, instr_rr },
     [0x04] = { "INC A", 1, 1, instr_inc_acc },
     [0x05] = { "INC direct", 2, 2, instr_inc_direct },
@@ -20,7 +20,8 @@ Instruction_t opcode_table[256] = {
     [0x0D] = { "INC R5", 1, 1, instr_inc_rn },
     [0x0E] = { "INC R6", 1, 1, instr_inc_rn },
     [0x0F] = { "INC R7", 1, 1, instr_inc_rn },
-    [0x0F] = { "JBC bit_adress, address", 3, 2, instr_jbc },
+    [0x10] = { "JBC bit_adress, address", 3, 2, instr_jbc },
+    [0x13] = { "RRC A", 1, 1, instr_inc_rrc },
 	[0x73] = { "JMP @A+DPTR", 1, 1, instr_jmp },
     [0xC0] = { "PUSH byte", 2, 2, instr_push },
 	[0xC2] = { "CLR bit", 1, 1, instr_clr_bit },
@@ -137,5 +138,14 @@ void instr_jbc(Mcu8051_t *mcu) {
 		mcu->cpu->is_jump = 1;
 		mcu->cpu->PC_arg = jmp;
 	}
+	return;
+}
+
+
+void instr_rrc(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL || mcu->mem == NULL) return;
+	mcu->mem->sfr.ACC = (mcu->mem->sfr.ACC & ~PSW_CY_MASK) | (mcu->mem->sfr.PSW & PSW_CY_MASK);
+	mcu->mem->sfr.PSW = (mcu->mem->sfr.PSW & ~PSW_CY_MASK) | ((mcu->mem->sfr.ACC & 1) ? PSW_CY_MASK : 0);
+	mcu->mem->sfr.ACC >>= 1;
 	return;
 }
