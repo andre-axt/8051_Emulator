@@ -86,49 +86,6 @@ void instr_inc_rn(Mcu8051_t *mcu) {
 	return;
 }
 
-void instr_clr_bit(Mcu8051_t *mcu) {
-	if (mcu->cpu == NULL || mcu->mem == NULL) return;
-	uint8_t bit = fetch_byte(mcu);
-	set_bit(mcu, bit, 0);
-	return;
-}
-
-void instr_clr_c(Mcu8051_t *mcu) {
-	mcu->mem->sfr.PSW &= (uint8_t)~(1u << 3);  
-	return;
-}
-
-void instr_clr_acc(Mcu8051_t *mcu) {
-	mcu->mem->sfr.ACC = 0;
-	return;
-}
-
-void instr_pop(Mcu8051_t *mcu) {
-	if(mcu->cpu == NULL || mcu->mem == NULL) return;
-	uint8_t address = fetch_byte(mcu);
-    uint8_t value = stack_pop_byte(mcu->mem);
-	memory_write_data(mcu->mem, address, value);
-	return;
-}
-
-void instr_push(Mcu8051_t *mcu) {
-	if(mcu->cpu == NULL || mcu->mem == NULL) return;
-	uint8_t address = fetch_byte(mcu);
-	uint8_t value = memory_read_data(mcu->mem, address);
-    stack_push_byte(mcu->mem, value);
-	return;
-}
-
-void instr_jmp(Mcu8051_t *mcu) {
-	if(mcu->cpu == NULL || mcu->mem == NULL) return;
-	uint16_t dptr = (mcu->mem->sfr.DPH << 8) | mcu->mem->sfr.DPL;
-	uint16_t jmp = (uint16_t)(mcu->mem->sfr.ACC + dptr);
-	mcu->cpu->is_jump = 1;
-	mcu->cpu->PC_arg = jmp;
-	return;
-}
-
-
 void instr_jbc(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
 	uint8_t bit_address = fetch_byte(mcu);
@@ -141,11 +98,52 @@ void instr_jbc(Mcu8051_t *mcu) {
 	return;
 }
 
-
 void instr_rrc(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 	mcu->mem->sfr.ACC = (mcu->mem->sfr.ACC & ~PSW_CY_MASK) | (mcu->mem->sfr.PSW & PSW_CY_MASK);
 	mcu->mem->sfr.PSW = (mcu->mem->sfr.PSW & ~PSW_CY_MASK) | ((mcu->mem->sfr.ACC & 1) ? PSW_CY_MASK : 0);
 	mcu->mem->sfr.ACC >>= 1;
+	return;
+}
+
+void instr_jmp(Mcu8051_t *mcu) {
+	if(mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint16_t dptr = (mcu->mem->sfr.DPH << 8) | mcu->mem->sfr.DPL;
+	uint16_t jmp = (uint16_t)(mcu->mem->sfr.ACC + dptr);
+	mcu->cpu->is_jump = 1;
+	mcu->cpu->PC_arg = jmp;
+	return;
+}
+
+void instr_push(Mcu8051_t *mcu) {
+	if(mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint8_t address = fetch_byte(mcu);
+	uint8_t value = memory_read_data(mcu->mem, address);
+    stack_push_byte(mcu->mem, value);
+	return;
+}
+
+void instr_clr_bit(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint8_t bit = fetch_byte(mcu);
+	set_bit(mcu, bit, 0);
+	return;
+}
+
+void instr_clr_c(Mcu8051_t *mcu) {
+	mcu->mem->sfr.PSW &= (uint8_t)~(1u << 3);  
+	return;
+}
+
+void instr_pop(Mcu8051_t *mcu) {
+	if(mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint8_t address = fetch_byte(mcu);
+    uint8_t value = stack_pop_byte(mcu->mem);
+	memory_write_data(mcu->mem, address, value);
+	return;
+}
+
+void instr_clr_acc(Mcu8051_t *mcu) {
+	mcu->mem->sfr.ACC = 0;
 	return;
 }
