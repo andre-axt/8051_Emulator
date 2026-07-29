@@ -27,6 +27,8 @@ Instruction_t opcode_table[256] = {
 	[0xC2] = { "CLR bit", 1, 1, instr_clr_bit },
 	[0xC3] = { "CLR C", 1, 1, instr_clr_c },
     [0xD0] = { "POP byte", 2, 2, instr_pop },
+    [0xD2] = { "SETB bit", 2, 1, instr_setb_bit },
+    [0xD3] = { "SETB C", 1, 1, instr_setb_c },
 	[0xE4] = { "CLR A", 1, 1, instr_clr_acc },
 
 };
@@ -145,5 +147,18 @@ void instr_pop(Mcu8051_t *mcu) {
 
 void instr_clr_acc(Mcu8051_t *mcu) {
 	mcu->mem->sfr.ACC = 0;
+	return;
+}
+
+void instr_setb_bit(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL || mcu->mem == NULL) return;
+	uint8_t bit = fetch_byte(mcu);
+	set_bit(mcu, bit, 1);
+	return;
+}
+
+void instr_setb_c(Mcu8051_t *mcu) {
+	if (mcu->cpu == NULL || mcu->mem == NULL) return;
+	mcu->mem->sfr.PSW |= (1u << 3);  
 	return;
 }
