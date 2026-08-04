@@ -106,7 +106,7 @@ Memory_t* memory_init();
 uint8_t memory_read_code(Memory_t *mem, uint16_t address);
 uint8_t memory_read_data(Memory_t *mem, uint8_t address);
 void memory_write_data(Memory_t *mem, uint8_t address, uint8_t value);
-int memory_load_program(Memory_t *mem, const uint8_t *program, uint16_t size, uint16_t start_address);
+int8_t memory_load_program(Memory_t *mem, const uint8_t *program, uint16_t size, uint16_t start_address);
 void stack_push_byte(Memory_t *mem, uint8_t value);
 uint8_t stack_pop_byte(Memory_t *mem);
 void stack_push_word(Memory_t *mem, uint16_t word); // 16-bit addresses
