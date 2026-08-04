@@ -141,7 +141,7 @@ void memory_write_data (Memory_t *mem, uint8_t address, uint8_t value) {
 
 }
 
-uint8_t memory_load_program (Memory_t *mem, const uint8_t *program, const uint16_t size, const uint16_t start_address) {
+int8_t memory_load_program (Memory_t *mem, const uint8_t *program, const uint16_t size, const uint16_t start_address) {
 	if (mem == NULL || program == NULL || size == 0) {
 		return -1;
 	
