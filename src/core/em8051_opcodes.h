@@ -23,6 +23,7 @@ void instr_inc_acc(Mcu8051_t *mcu);
 void instr_inc_direct(Mcu8051_t *mcu);
 void instr_inc_rn(Mcu8051_t *mcu);
 void instr_jbc(Mcu8051_t *mcu);
+void instr_rrc(Mcu8051_t *mcu);
 void instr_sjmp(Mcu8051_t *mcu);
 void instr_mov_acc_immed(Mcu8051_t *mcu);
 void instr_mov_direct_immed(Mcu8051_t *mcu);
