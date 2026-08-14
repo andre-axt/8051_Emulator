@@ -2,7 +2,7 @@
 ; NOP Test (opcode 0x00)
 ; ================================================================
                 ORG     0000H
-                ; No setup needed
+              
                 NOP                         ; opcode 0x00
                 SJMP    $                   ; Halt - PC = 0001H
                 END
