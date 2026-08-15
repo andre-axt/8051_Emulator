@@ -22,14 +22,18 @@ typedef struct Mcu8051_t Mcu8051_t;
 #define IP_PT0	 (1 << 1)
 #define IP_PX1	 (1 << 2)
 #define IP_PT1	 (1 << 3)
-#define IP_PS	 (1 << 4)
+#define IP_PS	   (1 << 4)
+
+#define INTPTS_INT0    (1 << 0)
+#define INTPTS_TIMER0  (1 << 1)
+#define INTPTS_INT1    (1 << 2)
+#define INTPTS_TIMER1  (1 << 3)
+#define INTPTS_SERIAL  (1 << 4)
 
 typedef struct Interruptions_t {
-  	int8_t Int0;
-  	int8_t Timer0;
-  	int8_t Int1;
-  	int8_t Timer1;
-  	int8_t Serial;
+  int8_t debug_mode;
+  int8_t intpts; 
+ 
 } Interruptions_t;
 
 Interruptions_t* init_intpt();
