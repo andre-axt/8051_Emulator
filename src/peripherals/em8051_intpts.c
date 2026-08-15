@@ -9,11 +9,8 @@ Interruptions_t* init_intpt(){
   interruptions = malloc(sizeof(Interruptions_t));
   
   if(interruptions == NULL) return NULL;
-  interruptions->Int0 = 1;
-  interruptions->Timer0 = 1;
-  interruptions->Int1 = 1;
-  interruptions->Timer1 = 1;
-  interruptions->Serial = 1;
+  interruptions->intpts = 0;
+  interruptions->debug_mode = 0;
   return interruptions;
   
 }
