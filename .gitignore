@@ -28,6 +28,7 @@ program
 *~
 *.swp
 *.swo
+*.debug_mode_state
 
 # OS generated files
 .DS_Store
