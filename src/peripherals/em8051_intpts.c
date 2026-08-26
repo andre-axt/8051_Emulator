@@ -64,6 +64,7 @@ void lock_intpt(Mcu8051_t *mcu, int8_t handler) {
 void set_intpt(Mcu8051_t *mcu, int8_t handler, uint8_t value) {
   if(handler == 0) return;
   if(value != 1 && value != 0) return;
+  uint8_t intpts = mcu->intpt->intpts;
   
   switch(handler) {
     case 1: mcu->intpt->intpts = (intpts & ~INTPTS_INT0) | (value & INTPTS_INT0) return;
