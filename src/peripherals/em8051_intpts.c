@@ -67,11 +67,11 @@ void set_intpt(Mcu8051_t *mcu, int8_t handler, uint8_t value) {
   uint8_t intpts = mcu->intpt->intpts;
   
   switch(handler) {
-    case 1: mcu->intpt->intpts = (intpts & ~INTPTS_INT0) | (value & INTPTS_INT0) return;
-    case 2: mcu->intpt->intpts = (intpts & ~INTPTS_TIMER0) | (value & INTPTS_TIMER0) return;
-    case 3: mcu->intpt->intpts = (intpts & ~INTPTS_INT1) | (value & INTPTS_INT1) return;
-    case 4: mcu->intpt->intpts = (intpts & ~INTPTS_TIMER1) | (value & INTPTS_TIMER1) return;
-    case 5: mcu->intpt->intpts = (intpts & ~INTPTS_SERIAL) | (value & INTPTS_SERIAL) return;
+    case 1: mcu->intpt->intpts = (intpts & ~INTPTS_INT0) | (value & INTPTS_INT0); return;
+    case 2: mcu->intpt->intpts = (intpts & ~INTPTS_TIMER0) | (value & INTPTS_TIMER0); return;
+    case 3: mcu->intpt->intpts = (intpts & ~INTPTS_INT1) | (value & INTPTS_INT1); return;
+    case 4: mcu->intpt->intpts = (intpts & ~INTPTS_TIMER1) | (value & INTPTS_TIMER1); return;
+    case 5: mcu->intpt->intpts = (intpts & ~INTPTS_SERIAL) | (value & INTPTS_SERIAL); return;
     default: return;
       
   }
