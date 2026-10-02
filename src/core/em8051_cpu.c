@@ -15,7 +15,6 @@ Cpu_t* cpu_init() {
 	cpu->total_cycles = 0;
 	cpu->PC = 0x0000;
 	cpu->PC_arg = 0;
-	cpu->is_jump = 0;
 	cpu->halted = 0;
 	#ifdef DEBUG_CPU
 		cpu->debug_mode = 1;
