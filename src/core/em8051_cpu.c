@@ -50,6 +50,10 @@ void cpu_step(Mcu8051_t *mcu) {
 	mcu->cpu->total_cycles += instr->cycles;
 	update_timers(mcu, instr->cycles);
 
+	int8_t pending_int = check_intpt(mcu);
+    if (pending_int > 0) {
+        lock_intpt(mcu, pending_int);
+    }
 
 	return;
 }
