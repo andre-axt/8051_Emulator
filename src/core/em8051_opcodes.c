@@ -77,12 +77,8 @@ void instr_inc_direct(Mcu8051_t *mcu) {
 void instr_inc_rn(Mcu8051_t *mcu) {
     if (mcu->cpu == NULL || mcu->mem == NULL) return; 
 	
-	uint8_t Rn = fetch_byte(mcu);
-    Rn--; 
-    
-    uint8_t rs0 = (mcu->mem->sfr.PSW >> 3) & 0x01; 
-    uint8_t rs1 = (mcu->mem->sfr.PSW >> 4) & 0x01; 
-    uint8_t bank = (rs1 << 1) | rs0; 
+	uint8_t Rn = opcode & 0x07;
+	uint8_t bank = (mcu->mem->sfr.PSW >> 3) & 0x03;
     
     mcu->mem->ram.banks[bank][Rn]++; 
 	return;
