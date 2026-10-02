@@ -86,13 +86,14 @@ void instr_inc_rn(Mcu8051_t *mcu) {
 
 void instr_jbc(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
+	
 	uint8_t bit_address = fetch_byte(mcu);
-	uint8_t bit = get_bit(mcu, bit_address);
-	uint8_t jmp = fetch_byte(mcu);
-	if (bit) { 
-		mcu->cpu->is_jump = 1;
-		mcu->cpu->PC_arg = jmp;
-	}
+	int8_t rel_offset = (int8_t)fetch_byte(mcu);
+	
+	if (get_bit(mcu, bit_address)) { 
+        set_bit(mcu, bit_address, 0); 
+        mcu->cpu->PC += rel_offset;
+    }
 	return;
 }
 
