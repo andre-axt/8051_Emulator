@@ -62,17 +62,24 @@ uint8_t get_bit(Mcu8051_t *mcu, uint8_t bit_addr) {
 }
 
 void set_bit(Mcu8051_t *mcu, uint8_t bit_addr, uint8_t value) {
-	uint8_t byte_offset = bit_addr >> 3;
-	uint8_t byte_addr = 0x20 + byte_offset;
-	uint8_t bit_pos = bit_addr & 0x07;
-	uint8_t byte = memory_read_data(mcu->mem, byte_addr);
+	if (bit_addr < 0x80) {
+        uint8_t byte_offset = bit_addr >> 3;
+        uint8_t byte_addr = 0x20 + byte_offset;
+        uint8_t bit_pos = bit_addr & 0x07;
+        uint8_t byte = memory_read_data(mcu->mem, byte_addr);
 
-	if (value) {
-		byte |= (1 << bit_pos);
-	} else {
-		byte &= ~(1 << bit_pos);
+        if (value) byte |= (1 << bit_pos);
+        else        byte &= ~(1 << bit_pos);
 
-	}
+        memory_write_data(mcu->mem, byte_addr, byte);
+    } else {
+        uint8_t sfr_addr = bit_addr & 0xF8;
+        uint8_t bit_pos = bit_addr & 0x07;
+        uint8_t byte = memory_read_data(mcu->mem, sfr_addr);
 
-	memory_write_data(mcu->mem, byte_addr, byte);
+        if (value) byte |= (1 << bit_pos);
+        else        byte &= ~(1 << bit_pos);
+
+        memory_write_data(mcu->mem, sfr_addr, byte);
+    }
 }
