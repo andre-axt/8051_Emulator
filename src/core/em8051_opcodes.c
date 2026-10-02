@@ -69,8 +69,8 @@ void instr_inc_acc(Mcu8051_t *mcu) {
 void instr_inc_direct(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 	uint8_t address = fetch_byte(mcu);
-    uint8_t value = 1;
-	memory_write_data(mcu->mem, address, value);
+    uint8_t memory_read_data(mcu->mem, address);
+	memory_write_data(mcu->mem, address, value + 1);
 	return;
 }
 
