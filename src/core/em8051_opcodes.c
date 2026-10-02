@@ -49,8 +49,7 @@ void instr_ajmp(Mcu8051_t *mcu) {
 void instr_ljmp(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 	uint16_t jump = fetch_word(mcu);
-	mcu->cpu->PC_arg = jump;
-	mcu->cpu->is_jump = 1;
+	mcu->cpu->PC = jump;
 	return;
 }
 
