@@ -129,7 +129,7 @@ void instr_clr_bit(Mcu8051_t *mcu) {
 }
 
 void instr_clr_c(Mcu8051_t *mcu) {
-	mcu->mem->sfr.PSW &= (uint8_t)~(1u << 3);  
+	mcu->mem->sfr.PSW &= ~PSW_CY_MASK;
 	return;
 }
 
@@ -155,6 +155,6 @@ void instr_setb_bit(Mcu8051_t *mcu) {
 
 void instr_setb_c(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
-	mcu->mem->sfr.PSW |= (1u << 3);  
+	mcu->mem->sfr.PSW |= PSW_CY_MASK;
 	return;
 }
