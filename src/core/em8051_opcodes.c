@@ -159,3 +159,9 @@ void instr_setb_c(Mcu8051_t *mcu) {
 	mcu->mem->sfr.PSW |= PSW_CY_MASK;
 	return;
 }
+
+void instr_reti(Mcu8051_t *mcu) {
+    if (mcu == NULL || mcu->mem == NULL || mcu->cpu == NULL) return;
+    mcu->cpu->PC = stack_pop_word(mcu->mem);
+	return;
+}
