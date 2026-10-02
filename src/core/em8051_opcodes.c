@@ -39,10 +39,14 @@ void instr_nop(Mcu8051_t *mcu) {
 }
 
 void instr_ajmp(Mcu8051_t *mcu) {
-	if (mcu->cpu == NULL || mcu->mem == NULL) return;
-	uint8_t jump = fetch_byte(mcu);
-	mcu->cpu->PC_arg = jump;
-	mcu->cpu->is_jump = 1;
+    if (mcu == NULL || mcu->cpu == NULL || mcu->mem == NULL) return;
+	
+    uint8_t opcode = memory_read_code(mcu->mem, mcu->cpu->PC - 1);
+    uint8_t low_byte = fetch_byte(mcu);
+    uint16_t page_offset = ((uint16_t)(opcode & 0xE0)) << 3;
+    uint16_t target_address = (mcu->cpu->PC & 0xF800) | page_offset | low_byte;
+
+    mcu->cpu->PC = target_address;
 	return;
 }
 
