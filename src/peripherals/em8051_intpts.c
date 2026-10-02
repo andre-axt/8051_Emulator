@@ -20,15 +20,34 @@ int8_t check_intpt(Mcu8051_t *mcu) {
 
   uint8_t ip = mcu->mem->sfr.IP; 
   uint8_t ie = mcu->mem->sfr.IE;
-
+  uint8_t tcon = mcu->mem->sfr.TCON;
+  uint8_t scon = mcu->mem->sfr.SCON;
+  
   if (!(ie & IE_EA)) return 0;
   
-  for (int i = 0; i <= 4; i++) {
-    if(ip & (1 << i)) {
-      return i + 1;
+  uint8_t pending[5] = {
+        (tcon & TCON_IE0_MASK) && (ie & IE_EX0), 
+        (tcon & TCON_TF0_MASK) && (ie & IE_ET0), 
+        (tcon & TCON_IE1_MASK) && (ie & IE_EX1), 
+        (tcon & TCON_TF1_MASK) && (ie & IE_ET1), 
+        ((scon & 0x03) != 0)   && (ie & IE_ES)   
+    };
+
+    // Check High Priority Interrupts (IP bit = 1)
+    for (int i = 0; i < 5; i++) {
+        if (pending[i] && (ip & (1 << i))) {
+            return i + 1;
+        }
     }
-  } 
-  return 0;
+
+    // Check Low Priority Interrupts (IP bit = 0)
+    for (int i = 0; i < 5; i++) {
+        if (pending[i] && !(ip & (1 << i))) {
+            return i + 1;
+        }
+    }
+
+    return 0;
   
 }
 
