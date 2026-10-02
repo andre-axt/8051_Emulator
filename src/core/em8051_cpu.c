@@ -26,12 +26,7 @@ Cpu_t* cpu_init() {
 }
 
 void cpu_step(Mcu8051_t *mcu) {
-	if (mcu->cpu->halted) return;
-
-	if(mcu->cpu->is_jump) {
-		mcu->cpu->PC = mcu->cpu->PC_arg - 1;
-		mcu->cpu->is_jump = 0;
-	}
+	if (mcu == NULL || mcu->cpu == NULL || mcu->cpu->halted) return;
 	
 	uint8_t opcode = fetch_byte(mcu);
 	Instruction_t *instr = &opcode_table[opcode];
