@@ -68,13 +68,37 @@ int8_t get_priority_from_intpt(Mcu8051_t *mcu, int8_t handler) {
 
 void lock_intpt(Mcu8051_t *mcu, int8_t handler) {
   if (handler == 0 || mcu == NULL) return;
+
+  stack_push_word(mcu->mem, mcu->cpu->PC);
   
-  switch(handler) {
-      case 1: mcu->cpu->PC = INT0;   return;
-      case 2: mcu->cpu->PC = TIMER0; return;
-      case 3: mcu->cpu->PC = INT1;   return;
-      case 4: mcu->cpu->PC = TIMER1; return;
-      case 5: mcu->cpu->PC = SERIAL; return;
+  switch (handler) {
+        case 1: 
+            mcu->cpu->PC = INT0;
+            if (mcu->mem->sfr.TCON & TCON_IT0_MASK) {
+                mcu->mem->sfr.TCON &= ~TCON_IE0_MASK;
+            }
+            break;
+
+        case 2: 
+            mcu->cpu->PC = TIMER0;
+            mcu->mem->sfr.TCON &= ~TCON_TF0_MASK; // Hardware clears TF0
+            break;
+
+        case 3: 
+            mcu->cpu->PC = INT1;
+            if (mcu->mem->sfr.TCON & TCON_IT1_MASK) {
+                mcu->mem->sfr.TCON &= ~TCON_IE1_MASK;
+            }
+            break;
+
+        case 4:
+            mcu->cpu->PC = TIMER1;
+            mcu->mem->sfr.TCON &= ~TCON_TF1_MASK; // Hardware clears TF1
+            break;
+
+        case 5: 
+            mcu->cpu->PC = SERIAL;
+            break;
   }
 
   return;
