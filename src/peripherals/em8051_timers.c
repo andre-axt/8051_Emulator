@@ -40,9 +40,12 @@ void update_timers(Mcu8051_t *mcu, uint8_t cycles) {
             else if (mode0 == 1) { 
                 uint32_t timer_val = (*TH0 << 8) | *TL0;
                 timer_val += cycles;
+                if (timer_val > 0xFFFF){
+					*TCON_REG |= TCON_TF0_MASK;
+					timer_val %= 0x10000;
+				}
                 *TL0 = timer_val & 0xFF;
                 *TH0 = (timer_val >> 8) & 0xFF;
-                if (timer_val > 0xFFFF) *TCON_REG |= TCON_TF0_MASK;
             } 
 				
             else if (mode0 == 2) {
