@@ -179,3 +179,9 @@ void instr_sjmp(Mcu8051_t *mcu) {
 
     mcu->cpu->PC += rel_offset;
 }
+
+void instr_ret(Mcu8051_t *mcu) {
+    if (mcu == NULL || mcu->cpu == NULL || mcu->mem == NULL) return;
+
+    mcu->cpu->PC = stack_pop_word(mcu->mem);
+}
