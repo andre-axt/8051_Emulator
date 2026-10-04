@@ -22,7 +22,10 @@ Instruction_t opcode_table[256] = {
     [0x0F] = { "INC R7", 1, 1, instr_inc_rn },
     [0x10] = { "JBC bit_adress, address", 3, 2, instr_jbc },
     [0x13] = { "RRC A", 1, 1, instr_rrc },
+    [0x22] = { "RET", 1, 2, instr_ret },
+    [0x32] = { "RETI", 1, 2, instr_reti },
 	[0x73] = { "JMP @A+DPTR", 1, 1, instr_jmp },
+    [0x80] = { "SJMP rel", 2, 2, instr_sjmp },
     [0xC0] = { "PUSH byte", 2, 2, instr_push },
 	[0xC2] = { "CLR bit", 1, 1, instr_clr_bit },
 	[0xC3] = { "CLR C", 1, 1, instr_clr_c },
@@ -167,4 +170,12 @@ void instr_reti(Mcu8051_t *mcu) {
     if (mcu == NULL || mcu->mem == NULL || mcu->cpu == NULL) return;
     mcu->cpu->PC = stack_pop_word(mcu->mem);
 	return;
+}
+
+void instr_sjmp(Mcu8051_t *mcu) {
+    if (mcu == NULL || mcu->cpu == NULL) return;
+
+    int8_t rel_offset = (int8_t)fetch_byte(mcu);
+
+    mcu->cpu->PC += rel_offset;
 }
