@@ -2,6 +2,7 @@
 #include "em8051_cpu.h"
 #include "em8051_intpts.h"
 #include "em8051_memory.h"
+#include "em8051_timers.h"
 #include <stdlib.h>
 
 Interruptions_t* init_intpt(){
