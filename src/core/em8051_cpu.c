@@ -3,6 +3,7 @@
 #include "em8051_memory.h"
 #include "em8051_opcodes.h"
 #include "em8051_timers.h"
+#include "em8051_intpts.h"
 #include "em8051_bitops.h"
 #include <stdlib.h>
 #include <stdio.h>
