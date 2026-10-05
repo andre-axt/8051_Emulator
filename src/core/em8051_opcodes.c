@@ -75,14 +75,14 @@ void instr_inc_acc(Mcu8051_t *mcu) {
 void instr_inc_direct(Mcu8051_t *mcu) {
 	if (mcu->cpu == NULL || mcu->mem == NULL) return;
 	uint8_t address = fetch_byte(mcu);
-    uint8_t memory_read_data(mcu->mem, address);
+    uint8_t value = memory_read_data(mcu->mem, address);
 	memory_write_data(mcu->mem, address, value + 1);
 	return;
 }
 
 void instr_inc_rn(Mcu8051_t *mcu) {
     if (mcu->cpu == NULL || mcu->mem == NULL) return; 
-	
+	uint8_t opcode = fetch_byte(mcu);
 	uint8_t Rn = opcode & 0x07;
 	uint8_t bank = (mcu->mem->sfr.PSW >> 3) & 0x03;
     
@@ -115,7 +115,6 @@ void instr_jmp(Mcu8051_t *mcu) {
 	if(mcu->cpu == NULL || mcu->mem == NULL) return;
 	uint16_t dptr = (mcu->mem->sfr.DPH << 8) | mcu->mem->sfr.DPL;
 	uint16_t jmp = (uint16_t)(mcu->mem->sfr.ACC + dptr);
-	mcu->cpu->is_jump = 1;
 	mcu->cpu->PC_arg = jmp;
 	return;
 }
